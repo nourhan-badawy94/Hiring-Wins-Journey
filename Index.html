@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Intercom Hiring Wins</title>
+<style>
+:root{--blue:#0569c8;--navy:#062b67;--yellow:#ffb70f;--red:#f5222d;--sky:#eef7ff;--line:#d9e8f7;--muted:#6680a4;--white:#fff}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--navy);background:#edf7ff}
+button,input,select,textarea{font:inherit}.hidden{display:none!important}.app{min-height:100vh;background:radial-gradient(circle at 75% 0,#fff 0,#eef8ff 36%,#e4f3ff 100%)}
+.login{min-height:100vh;display:grid;place-items:center;padding:22px;background:linear-gradient(135deg,#eaf6ff,#fff7d7)}
+.loginCard{width:min(520px,100%);background:white;border-radius:28px;padding:30px;box-shadow:0 25px 80px #0a4b8c26;text-align:center}
+.loginCard img{width:210px}.loginCard h1{font-size:34px;margin:15px 0 5px}.loginCard p{color:var(--muted)}
+.field{margin:12px 0;text-align:left}.field label{font-size:12px;font-weight:900;display:block;margin-bottom:5px}.field input,.field select,.field textarea{width:100%;border:1px solid #cfdfef;border-radius:12px;padding:12px;background:white}
+.btn{border:0;border-radius:13px;padding:12px 17px;font-weight:900;cursor:pointer}.primary{background:linear-gradient(135deg,var(--blue),#074b9d);color:white}.yellow{background:var(--yellow);color:#533900}.red{background:#fff0f1;color:#bd1720}.soft{background:#edf5fc;color:#174f89}
+.shell{display:grid;grid-template-columns:180px 1fr;min-height:100vh}.side{background:linear-gradient(180deg,#0873d3,#0052aa);color:#fff;padding:20px 14px;position:relative}
+.side img{width:150px;background:#fff;border-radius:15px;padding:7px}.side button{width:100%;text-align:left;margin-top:12px;background:transparent;border:1px solid transparent;color:#fff;padding:12px;border-radius:13px;font-weight:800;cursor:pointer}
+.side button.active{background:#ffffff18;border-color:#ffffff40}.side .quote{position:absolute;bottom:25px;left:18px;right:18px;font-style:italic;font-size:14px;line-height:1.5}
+.main{padding:22px;min-width:0}.top{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:18px}.title h1{font-size:38px;margin:0}.title h1 span{color:var(--yellow);font-style:italic}.title small{letter-spacing:4px;color:#47678f;font-weight:800}
+.userChip{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 12px 6px 7px}.avatar{width:43px;height:43px;border-radius:50%;object-fit:cover;background:linear-gradient(135deg,var(--yellow),var(--blue));border:3px solid #ffd45c}
+.initials{display:grid;place-items:center;color:white;font-weight:900}.grid{display:grid;grid-template-columns:360px 1fr 270px;gap:16px;align-items:start}.card{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 12px 30px #074b8a12;padding:17px;margin-bottom:16px}
+.profile{display:grid;grid-template-columns:120px 1fr;gap:15px;align-items:center}.profile .avatar{width:115px;height:115px;border-width:5px}.profile h2{font-size:25px;margin:3px 0}.profile .motto{font-style:italic;color:#0755a4;line-height:1.45}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:14px;border-top:1px solid #e8eef5;padding-top:13px}.stat{text-align:center}.stat+ .stat{border-left:1px solid #e1e8f0}.stat b{font-size:23px}.stat small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+.levelHero{display:grid;grid-template-columns:92px 1fr 190px;gap:15px;align-items:center}.medal{width:86px;height:86px;border-radius:50%;background:linear-gradient(135deg,#ffcf35,#ffad00);padding:7px}.medal div{height:100%;border-radius:50%;background:#0752a5;display:grid;place-items:center;font-size:38px}.levelHero h2{margin:3px 0;font-size:26px}.levelHero .q{font-style:italic;color:#58739b}.xp{height:13px;background:#e8eef5;border-radius:99px;overflow:hidden;margin:8px 0}.xp div{height:100%;background:linear-gradient(90deg,var(--yellow),#ffd963)}
+.path{display:flex;align-items:flex-start;justify-content:space-between;gap:5px;margin:15px 0 4px}.node{flex:1;text-align:center;position:relative}.node:before{content:"";position:absolute;height:4px;background:#d9e1eb;left:-50%;right:50%;top:25px;z-index:0}.node:first-child:before{display:none}.node.done:before,.node.current:before{background:var(--yellow)}.bubble{position:relative;z-index:1;margin:auto;width:52px;height:52px;border-radius:50%;background:#e9eef4;border:2px solid #ccd7e3;display:grid;place-items:center;font-size:23px}.node.done .bubble,.node.current .bubble{background:#fff6d2;border:3px solid var(--yellow)}.node.current .bubble{box-shadow:0 0 0 6px #fff1ad80}.node small{display:block;font-size:9px;margin-top:5px}.node.current small{font-weight:900}
+.head{display:flex;justify-content:space-between;align-items:center;gap:10px}.head h3{margin:0;font-size:20px}.quest{border:1px solid #dbe7f3;border-radius:14px;padding:12px;margin-top:9px}.quest b{font-size:13px}.quest .meta{font-size:11px;color:var(--muted);margin-top:6px;display:flex;justify-content:space-between;gap:5px;flex-wrap:wrap}.pill{padding:4px 8px;border-radius:99px;font-size:10px;font-weight:900}.critical{background:#ffebed;color:#d71f2a}.difficult{background:#fff2d3;color:#9a6500}.normal{background:#e7f4ff;color:#0967bd}
+.notice{display:grid;grid-template-columns:30px 1fr;gap:8px;padding:10px 0;border-bottom:1px solid #e9eef5}.notice:last-child{border:0}.notice b{font-size:12px}.notice small{font-size:10px;color:var(--muted);display:block;margin-top:2px}.rank{display:grid;grid-template-columns:28px 34px 1fr auto;align-items:center;gap:7px;margin:10px 0;font-size:11px}.rank .avatar{width:30px;height:30px;border-width:2px}.rankbar{height:6px;background:#edf1f5;border-radius:9px;margin-top:4px;overflow:hidden}.rankbar div{height:100%;background:var(--yellow)}
+.adminGrid{display:grid;grid-template-columns:330px 1fr;gap:16px}.recruiter{display:grid;grid-template-columns:55px 1fr auto;gap:10px;align-items:center;padding:10px;border-bottom:1px solid #e9eef5}.recruiter .avatar{width:52px;height:52px}.table{width:100%;border-collapse:collapse}.table th,.table td{text-align:left;padding:10px;border-bottom:1px solid #e8eef4;font-size:12px}.table th{color:var(--muted)}
+.modal{position:fixed;inset:0;background:#06275dbb;display:none;align-items:center;justify-content:center;padding:20px;z-index:30}.modal.show{display:flex}.modalBox{width:min(580px,100%);max-height:90vh;overflow:auto;background:white;border-radius:24px;padding:22px}
+.celebrate{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#0054b3ed,#073b82ed);z-index:50}.celebrate.show{display:flex}.party{width:min(650px,100%);background:#fff;border-radius:28px;padding:30px;text-align:center;overflow:hidden}.party .trophy{font-size:75px}.party h1{font-size:35px;margin:7px}.party .transition{background:#eef7ff;border:1px solid #d5e8f8;border-radius:18px;padding:14px;margin:15px 0;font-size:20px;font-weight:900}.party .reward{background:#fff5ce;padding:14px;border-radius:15px;margin:12px 0}
+.conf{position:fixed;top:-20px;width:10px;height:17px;z-index:60;animation:fall 3s linear forwards}@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+@media(max-width:1050px){.grid{grid-template-columns:330px 1fr}.rightcol{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:15px}.rightcol .card{margin:0}.levelHero{grid-template-columns:80px 1fr}.levelHero .levelProgress{grid-column:1/-1}}
+@media(max-width:760px){.shell{grid-template-columns:1fr}.side{position:static;display:flex;align-items:center;gap:8px;flex-wrap:wrap}.side img{width:110px}.side button{width:auto;margin:0}.side .quote{display:none}.main{padding:14px}.grid,.adminGrid{grid-template-columns:1fr}.rightcol{grid-template-columns:1fr}.title h1{font-size:29px}.profile{grid-template-columns:85px 1fr}.profile .avatar{width:82px;height:82px}.path{overflow-x:auto;justify-content:flex-start}.node{min-width:75px}.top{align-items:flex-start}}
+
+.bonusScheme{display:grid;gap:7px}.bonusLine{display:grid;grid-template-columns:34px 1fr 38px;gap:8px;align-items:center;padding:9px;border-radius:12px;background:#f7fbff;border:1px solid #e1edf8}
+.bonusLine .bonusIcon{width:31px;height:31px;border-radius:10px;background:#fff3c8;display:grid;place-items:center}.bonusLine b{font-size:12px;display:block}.bonusLine small{font-size:9px;color:#6680a4;display:block;margin-top:2px}.bonusLine strong{font-size:17px;color:#0569c8;text-align:right}.maxScore{margin-top:10px;padding:10px;text-align:center;border-radius:12px;background:linear-gradient(100deg,#fff6d5,#eef7ff);font-size:11px;color:#0a4d9d}
+
+.rewardVault{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.rewardTile{padding:11px 8px;border:1px solid #e1edf8;border-radius:13px;background:linear-gradient(145deg,#fff,#f7fbff);text-align:center;min-height:92px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.rewardTile>span{font-size:24px;margin-bottom:4px}.rewardTile b{font-size:11px;color:#0a4d9d}.rewardTile small{font-size:9px;color:#6680a4;margin-top:3px;line-height:1.25}
+@media(max-width:700px){.rewardVault{grid-template-columns:1fr 1fr}}
+
+.legacyLaunch{background:linear-gradient(110deg,#fff8dd,#f0f8ff);border:1px solid #f4d77b;display:flex;gap:13px;align-items:center}
+.legacyLaunch.hidden{display:none}.legacyHero{font-size:34px;width:52px;height:52px;border-radius:16px;background:#fff;display:grid;place-items:center;box-shadow:0 5px 15px #0a4d9d14}
+
+.preGameBanner{margin:10px 0;padding:12px;border-radius:14px;background:linear-gradient(110deg,#fff5c8,#edf7ff);border:1px solid #f2d26b;display:flex;align-items:center;gap:10px}
+.preGameBanner.hidden{display:none}.pgIcon{font-size:27px}.preGameBanner b{font-size:12px;color:#0a4d9d;display:block}.preGameBanner small{font-size:9px;color:#6680a4;line-height:1.45;display:block;margin-top:3px}
+
+.milestoneCompletion{font-size:11px;font-weight:900;color:#0569c8;margin-bottom:5px;text-transform:uppercase;letter-spacing:.35px}
+.preGameTag{display:inline-block;margin-left:7px;padding:3px 6px;border-radius:999px;background:#fff1b8;color:#7a5800;font-size:8px;font-weight:900}
+#legacyLaunchCard{grid-column:1/-1;margin-bottom:14px;border:2px solid #ffd45c;box-shadow:0 10px 28px #e0a8001c}
+#legacyLaunchCard h3{font-size:16px;color:#0a4d9d}
+
+.notifPager{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:10px;padding-top:9px;border-top:1px solid #e7eef7}
+.notifPager.hidden{display:none}.notifArrow{width:30px;height:30px;border-radius:50%;border:1px solid #d9e6f3;background:white;color:#0569c8;font-size:16px;font-weight:900;cursor:pointer}
+.notifArrow:hover:not(:disabled){background:#eef7ff}.notifArrow:disabled{opacity:.3;cursor:default}#notifPageInfo{font-size:10px;font-weight:800;color:#6680a4;min-width:34px;text-align:center}
+
+textarea{resize:vertical;min-height:110px;font-family:inherit}.clickableQuest{cursor:pointer;transition:.18s}.clickableQuest:hover{transform:translateY(-1px);box-shadow:0 7px 18px #0a4d9d16;border-color:#b9d8f5}.viewHint{display:block;margin-top:7px;color:#0569c8;font-size:9px;font-weight:800}
+.pill.hold{background:#fff0bf;color:#805b00}.detailBox{max-width:620px}.detailTop{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.detailEyebrow{font-size:9px;font-weight:900;color:#0569c8;letter-spacing:1px}.xClose{border:0;background:#eef5fb;border-radius:50%;width:32px;height:32px;font-size:20px;cursor:pointer}
+.detailGrid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:14px 0}.detailGrid>div{padding:10px;background:#f7fbff;border:1px solid #e1edf8;border-radius:11px}.detailGrid small,.jdBox>small{display:block;font-size:8px;color:#6680a4;font-weight:900;letter-spacing:.5px;margin-bottom:4px}.detailGrid b{font-size:11px}.jdBox{padding:12px;border-radius:12px;background:#fbfcfe;border:1px solid #e1edf8;font-size:11px;line-height:1.55;max-height:250px;overflow:auto}
+.statusBanner{display:inline-block;padding:7px 10px;border-radius:9px;font-size:10px;font-weight:900;margin-top:7px}.holdBanner{background:#fff0bf;color:#805b00}.openBanner{background:#e8f8ef;color:#14733d}.legacyBanner{background:#fff4ce;color:#765800}.achievementChip{display:inline-block;padding:6px 8px;margin:3px;border-radius:999px;background:#edf6ff;color:#0759a7;font-size:9px;font-weight:800}.celebrateName{font-size:22px;font-weight:950;color:#0569c8;margin:4px 0 12px}
+@media(max-width:600px){.detailGrid{grid-template-columns:1fr}}
+
+/* Subtle recruiter animations */
+#gameView{position:relative}#gameView>.gameGrid,#gameView>#legacyLaunchCard{position:relative;z-index:1}.gameSparkles{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}.gameSparkles i{position:absolute;color:#ffb70f;opacity:.12;font-style:normal;animation:floatSpark 8s ease-in-out infinite}.gameSparkles i:nth-child(1){left:7%;top:10%;font-size:20px}.gameSparkles i:nth-child(2){left:91%;top:23%;animation-delay:1.5s}.gameSparkles i:nth-child(3){left:50%;top:49%;animation-delay:3s}.gameSparkles i:nth-child(4){left:76%;top:73%;animation-delay:4.5s}.gameSparkles i:nth-child(5){left:15%;top:88%;animation-delay:6s}@keyframes floatSpark{0%,100%{transform:translateY(0) rotate(0);opacity:.08}50%{transform:translateY(-16px) rotate(18deg);opacity:.22}}
+#levelEmoji{display:inline-block;animation:badgeFloat 2.8s ease-in-out infinite}@keyframes badgeFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px) scale(1.05)}}#xpBar{position:relative;overflow:hidden}#xpBar:after,.adminXp>div:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,#fff8,transparent);transform:translateX(-100%);animation:xpShine 2.6s linear infinite}@keyframes xpShine{to{transform:translateX(100%)}}.node.current .bubble{animation:currentPulse 1.8s ease-in-out infinite}@keyframes currentPulse{0%,100%{box-shadow:0 0 0 0 #ffb70f55}50%{box-shadow:0 0 0 8px #ffb70f00}}
+/* Admin progress */
+.adminProgressCard{margin-bottom:14px}.adminProgressRow{display:grid;grid-template-columns:210px minmax(220px,1fr) minmax(220px,310px);gap:18px;align-items:center;padding:14px 4px;border-top:1px solid #e6eef7}.adminProgressRow:first-child{border-top:0}.adminProgressPerson{display:flex;align-items:center;gap:9px}.adminProgressPerson .avatar{width:42px;height:42px}.adminProgressPerson b{font-size:12px;color:#073b77}.adminProgressPerson small{display:block;font-size:9px;color:#6680a4;margin-top:3px}.adminProgressLabels{display:flex;justify-content:space-between;gap:10px;font-size:10px;margin-bottom:6px}.adminProgressLabels b{color:#0569c8}.adminProgressLabels span{color:#6680a4}.adminXp{height:10px;background:#eaf1f8;border-radius:999px;overflow:hidden}.adminXp>div{height:100%;background:linear-gradient(90deg,#0569c8,#ffb70f);border-radius:999px;position:relative;overflow:hidden}.nextTreat{padding:10px 12px;border-radius:12px;background:linear-gradient(120deg,#fff6d6,#f1f8ff);border:1px solid #f2d678}.nextTreat small,.nextTreat span{display:block;font-size:8px;color:#6680a4}.nextTreat b{display:block;font-size:11px;color:#0a4d9d;margin:4px 0}
+@media(max-width:900px){.adminProgressRow{grid-template-columns:1fr}}@media(prefers-reduced-motion:reduce){.gameSparkles i,#levelEmoji,#xpBar:after,.adminXp>div:after,.node.current .bubble{animation:none!important}}
+
+.leaderTabs{display:flex;gap:5px;margin:7px 0 10px}.leaderTab{border:1px solid #dce9f5;background:white;color:#6680a4;border-radius:999px;padding:6px 9px;font-size:9px;font-weight:900;cursor:pointer}.leaderTab.active{background:#0569c8;color:white;border-color:#0569c8}.accountRow{display:grid;grid-template-columns:42px 1fr auto;align-items:center;gap:9px;padding:10px 2px;border-top:1px solid #e8eff7}.accountRow:first-child{border-top:0}.accountRow small{display:block;color:#6680a4;font-size:9px;margin-top:2px}.adminOnlyTag{font-size:8px;background:#fff0bf;color:#765800;padding:3px 6px;border-radius:999px}
+
+.adminLeaderProfile,.recruiterPerf{display:flex;align-items:center;gap:10px;padding:12px 3px;border-top:1px solid #e7eef6}.adminLeaderProfile:first-child,.recruiterPerf:first-child{border-top:0}.grow{flex:1;min-width:0}.adminLeaderProfile b,.recruiterPerf b{display:block;color:#073b77;font-size:12px}.adminLeaderProfile small,.recruiterPerf small{display:block;color:#6680a4;font-size:9px;margin-top:3px}.adminEmpty{padding:22px;text-align:center;color:#6680a4;background:#f8fbfe;border-radius:12px}.companyStats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:5px 0 16px}.companyStats>div{padding:13px;background:#f7faff;border:1px solid #e2ebf5;border-radius:12px;text-align:center}.companyStats b{display:block;font-size:20px;color:#0569c8}.companyStats small{font-size:9px;color:#6680a4}.performanceTable{border:1px solid #e2ebf5;border-radius:12px;overflow:hidden}.perfHead,.perfRow{display:grid;grid-template-columns:minmax(180px,2fr) repeat(3,minmax(70px,1fr));gap:8px;align-items:center;padding:10px 12px}.perfHead{background:#f3f7fb;font-size:9px;color:#6680a4}.perfRow{border-top:1px solid #e7eef6;font-size:11px}.perfRow small{display:block;font-size:8px;color:#6680a4}.perfRow strong{color:#0569c8}.recruiterPerfTitle{font-size:11px;font-weight:900;color:#073b77;margin:18px 0 4px}.hierTeam{padding:12px 3px;border-top:1px solid #e7eef6}.hierTeam:first-child{border-top:0}.hierLeader{display:flex;align-items:center;gap:9px}.hierLeader b,.hierRecruiter b{display:block;font-size:11px;color:#073b77}.hierLeader small,.hierRecruiter small{display:block;font-size:8px;color:#6680a4}.hierBranch{margin:7px 0 0 20px;padding-left:16px;border-left:2px solid #dce9f5}.hierRecruiter{display:grid;grid-template-columns:20px 34px 1fr;align-items:center;gap:7px;padding:7px 0}.hierRecruiter .avatar{width:32px;height:32px}.hierEmpty{font-size:9px;color:#8ba0b9;padding:8px 0}@media(max-width:700px){.companyStats{grid-template-columns:repeat(2,1fr)}.perfHead,.perfRow{grid-template-columns:minmax(130px,2fr) repeat(3,55px);font-size:9px;overflow:auto}}
+
+/* ===== v24 Landing Page Art Pass — landing only ===== */
+#login.login{
+  position:relative; isolation:isolate; overflow:hidden;
+  background:
+    radial-gradient(circle at 12% 18%,rgba(255,193,7,.24),transparent 25%),
+    radial-gradient(circle at 88% 15%,rgba(237,49,60,.15),transparent 23%),
+    radial-gradient(circle at 82% 82%,rgba(0,105,200,.16),transparent 25%),
+    linear-gradient(135deg,#f8fcff 0%,#ffffff 44%,#fff9e9 100%);
+}
+#login.login:before,#login.login:after{
+  content:"";position:absolute;border-radius:999px;z-index:-1;filter:blur(1px);pointer-events:none
+}
+#login.login:before{width:330px;height:330px;left:-130px;top:-120px;background:linear-gradient(145deg,rgba(0,105,200,.17),rgba(255,193,7,.12));animation:landingOrb 8s ease-in-out infinite}
+#login.login:after{width:270px;height:270px;right:-90px;bottom:-90px;background:linear-gradient(145deg,rgba(255,193,7,.22),rgba(237,49,60,.11));animation:landingOrb 10s ease-in-out infinite reverse}
+#login .loginCard{
+  position:relative;overflow:hidden;
+  border:1px solid rgba(0,105,200,.12);
+  box-shadow:0 24px 65px rgba(3,63,125,.16),0 5px 16px rgba(3,63,125,.07);
+  animation:landingCardIn .7s cubic-bezier(.2,.8,.2,1) both;
+}
+#login .loginCard:before{
+  content:"";position:absolute;left:-35%;top:-2px;width:32%;height:4px;
+  background:linear-gradient(90deg,transparent,#ffbd16,#ed313c,#0069c8,transparent);
+  animation:landingShimmer 4.2s ease-in-out infinite
+}
+#login .loginCard:after{
+  content:"✦";position:absolute;right:22px;top:20px;color:#ffbd16;font-size:20px;
+  text-shadow:-32px 22px 0 rgba(0,105,200,.24),-10px 48px 0 rgba(237,49,60,.15);
+  animation:landingTwinkle 2.8s ease-in-out infinite
+}
+#login .loginCard img{animation:logoFloat 4s ease-in-out infinite}
+#login .loginCard h1{
+  letter-spacing:-.04em;
+  text-shadow:0 5px 20px rgba(0,105,200,.08)
+}
+#login .loginCard h1 span{position:relative;display:inline-block;animation:winsBounce 4.5s ease-in-out infinite}
+#login .loginCard h1 span:after{
+  content:"";position:absolute;left:3%;right:0;bottom:-4px;height:6px;border-radius:50%;
+  background:#ffbd16;opacity:.22;transform:rotate(-2deg)
+}
+#login .loginCard>p:first-of-type{
+  font-weight:800;letter-spacing:.08em;color:#55789e;text-transform:uppercase;font-size:10px
+}
+#login .field select,#login .field input{
+  border:1.5px solid #dce9f5;background:linear-gradient(180deg,#fff,#fbfdff);
+  transition:border-color .2s,box-shadow .2s,transform .2s
+}
+#login .field select:focus,#login .field input:focus{
+  border-color:#ffbd16;box-shadow:0 0 0 4px rgba(255,189,22,.16);transform:translateY(-1px)
+}
+#login #loginBtn{
+  position:relative;overflow:hidden;
+  background:linear-gradient(105deg,#0069c8 0%,#0877d6 45%,#ffb70f 100%);
+  box-shadow:0 12px 25px rgba(0,105,200,.22);
+  transition:transform .2s,box-shadow .2s
+}
+#login #loginBtn:before{
+  content:"";position:absolute;top:-50%;bottom:-50%;width:45px;left:-70px;
+  background:rgba(255,255,255,.36);transform:rotate(20deg);filter:blur(4px);
+  animation:buttonSweep 3.8s ease-in-out infinite
+}
+#login #loginBtn:hover{transform:translateY(-2px) scale(1.01);box-shadow:0 16px 30px rgba(0,105,200,.27)}
+#login #loginBtn:active{transform:translateY(0) scale(.99)}
+#login .landingGameBits{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;margin:15px 0 5px}
+#login .landingGameBits span{
+  padding:6px 9px;border-radius:999px;font-size:8px;font-weight:900;letter-spacing:.06em;
+  color:#07579f;background:#f2f8ff;border:1px solid #dceafa;
+  animation:chipFloat 4s ease-in-out infinite
+}
+#login .landingGameBits span:nth-child(2){animation-delay:.35s;color:#8a6200;background:#fff9df;border-color:#ffe7a0}
+#login .landingGameBits span:nth-child(3){animation-delay:.7s;color:#b32731;background:#fff1f2;border-color:#ffd5d8}
+#login .landingGameBits span:nth-child(4){animation-delay:1.05s}
+#login .landingStart{
+  margin:2px auto 14px;text-align:center;font-size:10px;font-weight:900;color:#073b77;
+}
+#login .landingStart b{color:#e69b00}
+#login .confettiDot{position:absolute;z-index:-1;width:8px;height:8px;border-radius:3px;opacity:.45;animation:confettiDrift 6s ease-in-out infinite}
+#login .cd1{left:10%;top:65%;background:#ffbd16}.cd2{left:21%;top:13%;background:#0069c8;animation-delay:1s}.cd3{right:18%;top:35%;background:#ed313c;animation-delay:2s}.cd4{right:8%;top:68%;background:#ffbd16;animation-delay:.4s}
+@keyframes landingCardIn{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes landingOrb{50%{transform:translate(20px,18px) scale(1.06)}}
+@keyframes landingShimmer{0%,55%{left:-35%}80%,100%{left:110%}}
+@keyframes landingTwinkle{50%{transform:scale(1.25) rotate(8deg);opacity:.45}}
+@keyframes logoFloat{50%{transform:translateY(-4px)}}
+@keyframes winsBounce{0%,82%,100%{transform:none}88%{transform:translateY(-4px) rotate(-1deg)}94%{transform:translateY(0)}}
+@keyframes buttonSweep{0%,55%{left:-70px}78%,100%{left:115%}}
+@keyframes chipFloat{50%{transform:translateY(-3px)}}
+@keyframes confettiDrift{50%{transform:translateY(-12px) rotate(35deg)}}
+@media(max-width:600px){#login .loginCard{margin:16px}#login.login:before{width:240px;height:240px}#login.login:after{width:210px;height:210px}}
+@media(prefers-reduced-motion:reduce){
+ #login.login:before,#login.login:after,#login .loginCard,#login .loginCard:before,#login .loginCard:after,
+ #login .loginCard img,#login .loginCard h1 span,#login #loginBtn:before,#login .landingGameBits span,#login .confettiDot{animation:none!important}
+}
+
+.btn.danger{background:#fff1f2;color:#b4232c;border:1px solid #ffd1d5}.btn.danger:hover{background:#ffe5e8;border-color:#ffb8bf}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+<div class="login" id="login">
+<span class="confettiDot cd1"></span><span class="confettiDot cd2"></span><span class="confettiDot cd3"></span><span class="confettiDot cd4"></span><div class="loginCard">
+<img alt="Intercom" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA/QAAADkCAYAAAA2G29kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NTc3MiwgMjAxNC8wMS8xMy0xOTo0NDowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjUwNkFGNjJGMEM4QTExRTc4QkU0QjdCMzEzN0RBQ0ZGIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjUwNkFGNjMwMEM4QTExRTc4QkU0QjdCMzEzN0RBQ0ZGIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NTA2QUY2MkQwQzhBMTFFNzhCRTRCN0IzMTM3REFDRkYiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NTA2QUY2MkUwQzhBMTFFNzhCRTRCN0IzMTM3REFDRkYiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5+Abo3AAA0dklEQVR42uzd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"/>
+<h1>Hiring <span style="color:#ffb70f;font-style:italic">Wins</span> Journey</h1>
+<p>Hire • Grow • Earn • Celebrate</p>
+<div class="landingGameBits" aria-hidden="true"><span>🎯 HIRE</span><span>⭐ EARN</span><span>🚀 LEVEL UP</span><span>🏆 CELEBRATE</span></div>
+<div class="landingStart">Your next hiring win starts <b>here.</b> ✦</div>
+<div class="field"><label>Choose Account</label><select id="loginAccount"></select></div>
+<div class="field"><label>PIN</label><input id="loginPin" inputmode="numeric" placeholder="Enter PIN" type="password"/></div>
+<button class="btn primary" id="loginBtn" style="width:100%">Enter the Game 🎮</button>
+<p style="font-size:11px">Demo/local account system — data is stored on this browser.</p>
+</div>
+</div>
+<div class="app hidden" id="app">
+<div class="shell">
+<aside class="side">
+<img alt="Intercom" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA/QAAADkCAYAAAA2G29kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NTc3MiwgMjAxNC8wMS8xMy0xOTo0NDowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjUwNkFGNjJGMEM4QTExRTc4QkU0QjdCMzEzN0RBQ0ZGIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjUwNkFGNjMwMEM4QTExRTc4QkU0QjdCMzEzN0RBQ0ZGIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NTA2QUY2MkQwQzhBMTFFNzhCRTRCN0IzMTM3REFDRkYiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NTA2QUY2MkUwQzhBMTFFNzhCRTRCN0IzMTM3REFDRkYiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5+Abo3AAA0dklEQVR42uzd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"/>
+<button class="active" id="gameNav">🎮 Hiring Game</button>
+<button id="adminNav">⚙️ Admin Dashboard</button>
+<button id="logoutNav">↩ Log Out</button>
+<div class="quote">Great People<br/>Build Great Things ✨</div>
+</aside>
+<main class="main">
+<div class="top">
+<div class="title"><small>HIRE • GROW • EARN • CELEBRATE</small><h1>Hiring <span>Wins</span> Journey</h1></div>
+<div class="userChip"><div id="topAvatar"></div><div><b id="topName"></b><div id="topRole" style="font-size:10px;color:#6680a4"></div></div></div>
+</div>
+<section id="gameView"><div aria-hidden="true" class="gameSparkles"><i>✦</i><i>★</i><i>✦</i><i>•</i><i>★</i></div>
+<div class="grid">
+<div class="leftcol">
+<div class="card">
+<div class="profile"><div id="profileAvatar"></div><div><small>Welcome back,</small><h2 id="welcomeName"></h2><b>👑 Recruiter Extraordinaire</b><div class="motto" id="profileQuote"></div></div></div>
+<div class="stats"><div class="stat"><b>⭐ <span id="pts">0</span></b><small>Lifetime Points</small></div><div class="stat"><b>🎯 <span id="positionsClosedCount">0</span></b><small>Positions Closed</small></div><div class="stat"><b>📊 <span id="avgTtfValue">—</span></b><small>Avg. TTF (days)</small></div></div>
+</div>
+<div class="card">
+<div class="head"><h3>📂 Open Positions</h3><button class="btn primary hidden" id="addPosGame">＋</button></div>
+<div style="font-size:11px;color:#6680a4">Positions currently assigned to you</div><div id="quests"></div>
+</div>
+<div class="card">
+<div class="head"><h3>⚡ How I Earn Points</h3><span class="pill normal">BONUS SCHEME</span></div>
+<div style="font-size:11px;color:#6680a4;margin:3px 0 12px">Every hiring win starts with 3 points — achievements add more.</div>
+<div class="bonusScheme">
+<div class="bonusLine"><span class="bonusIcon">🎯</span><div><b>Successful Hire</b><small>Every position successfully closed</small></div><strong>+3</strong></div>
+<div class="bonusLine"><span class="bonusIcon">🔥</span><div><b>Difficult Position</b><small>Difficulty bonus</small></div><strong>+1</strong></div>
+<div class="bonusLine"><span class="bonusIcon">🔥</span><div><b>Very Difficult</b><small>Higher difficulty bonus</small></div><strong>+2</strong></div>
+<div class="bonusLine"><span class="bonusIcon">💎</span><div><b>Critical / Hard-to-Fill</b><small>Highest difficulty bonus</small></div><strong>+3</strong></div>
+<div class="bonusLine"><span class="bonusIcon">⚡</span><div><b>Closed Early</b><small>Offer issued before target joining date</small></div><strong>+2</strong></div>
+<div class="bonusLine"><span class="bonusIcon">📉</span><div><b>Faster TTF</b><small>TTF lower than your previous closed position</small></div><strong>+2</strong></div>
+<div class="bonusLine"><span class="bonusIcon">🚀</span><div><b>Major TTF Improvement</b><small>25%+ faster than your previous TTF</small></div><strong>+1</strong></div>
+</div>
+<div class="maxScore">🏆 A single Critical hiring win can earn <b>up to 11 points!</b></div>
+</div>
+
+</div>
+<div class="midcol">
+<div class="card">
+<div class="levelHero"><div class="medal"><div id="levelEmoji">🌱</div></div><div><small>Current Level</small><h2 id="levelName"></h2><div class="q" id="levelQuote"></div></div><div class="levelProgress"><div class="milestoneCompletion" id="milestoneCompletion">0% Milestone Completion</div><b id="xpText"></b><div class="xp"><div id="xpBar"></div></div><small id="toNext"></small></div></div>
+<div class="path" id="path"></div>
+</div>
+<div class="card">
+<div class="head"><h3>🏆 Hiring Wins</h3><span style="font-size:11px;color:#6680a4">Your completed quests</span></div>
+<div id="wins"></div>
+</div>
+</div>
+<div class="rightcol">
+<div class="card"><div class="head"><h3>🔔 Notifications</h3><span class="pill critical" id="notifBadge">0</span></div><div id="notices"></div><div class="notifPager hidden" id="notifPager"><button class="notifArrow" id="notifPrev" title="Previous notifications">←</button><span id="notifPageInfo"></span><button class="notifArrow" id="notifNext" title="Next notifications">→</button></div></div>
+<div class="card"><div class="head"><h3>📊 Leaderboard</h3><small>All Time</small></div><div class="leaderTabs"><button id="teamBoardBtn" class="leaderTab active">My Team</button><button id="allBoardBtn" class="leaderTab">All Recruiters</button></div><div id="leaderboard"></div></div>
+<div class="card" style="text-align:center;font-style:italic;color:#0a4d9d">“Behind every hired talent<br/>is a brighter future.” ✈️</div>
+</div>
+</div>
+</section>
+
+<section id="systemAdminView" class="hidden">
+  <div class="card" style="margin-bottom:14px">
+    <div class="head">
+      <div><h3>👩‍💼 Team Leader Profiles</h3><small>Create and manage the leaders who will run each recruitment team.</small></div>
+      <button id="newTeamLeaderAdmin" class="btn primary">＋ Create Team Leader</button>
+    </div>
+    <div id="adminTeamLeaderProfiles"></div>
+  </div>
+
+  <div class="card" style="margin-bottom:14px">
+    <div class="head"><div><h3>📊 Team & Recruiter Performance</h3><small>Company-wide hiring game performance at a glance.</small></div><span class="pill normal">ALL TEAMS</span></div>
+    <div id="companyPerformance"></div>
+  </div>
+
+  <div class="card">
+    <div class="head"><div><h3>🌳 Teams Hierarchy</h3><small>See every Team Leader and the recruiters reporting to them.</small></div></div>
+    <div id="teamsHierarchy"></div>
+  </div>
+</section>
+<section class="hidden" id="adminView">
+<div class="card adminProgressCard">
+<div class="head"><div><h3>🏁 Recruiter Progress &amp; Next Reward</h3><small>See how close each recruiter is to the next milestone and prepare the surprise.</small></div><span class="pill normal">ADMIN ONLY</span></div>
+<div id="adminProgress"></div>
+</div>
+<div class="adminGrid">
+<div>
+<div class="card"><div class="head"><h3>👥 Recruiter Account Management</h3><button class="btn primary" id="newRecruiter">＋ Add</button></div><div id="recruiterList"></div></div>
+</div>
+<div>
+<div class="card"><div class="head"><div><h3>🎯 Positions Management</h3><small>Add open positions, assign them to recruiters, and record closed positions</small></div><div style="display:flex;gap:8px;flex-wrap:wrap">
+<button class="btn primary" id="newPosition">＋ Add New Position</button>
+<button class="btn yellow" id="newClosedPosition">🏆 Add Pre-Game / Closed Position</button>
+<button class="btn soft" id="downloadPositionTemplate">⬇ Download Excel Template</button>
+<button class="btn soft" id="uploadPositionsBtn">⬆ Upload Excel</button>
+<input id="positionsExcelFile" type="file" accept=".xlsx,.xls,.csv" style="display:none">
+</div></div><div id="adminPositions"></div></div>
+<div class="card"><div class="head"><h3>🏅 Milestones &amp; Rewards</h3><button class="btn primary" id="newLevel" class="adminOnlyControl">＋ Add Level</button></div><div id="adminLevels"></div></div>
+</div>
+</div>
+</section>
+</main>
+</div>
+</div>
+<div class="modal" id="recruiterModal"><div class="modalBox"><h2>👤 Recruiter Account</h2><input id="rId" type="hidden"/><div class="field"><label>Name</label><input id="rName"/></div><div class="field"><label>Photo</label><input accept="image/*" id="rPhoto" type="file"/></div><div class="field"><label>PIN</label><input id="rPin" inputmode="numeric" placeholder="4+ digits" type="password"/></div><div class="field"><label>Personal welcome quote</label><input id="rQuote" placeholder="You make opportunities happen!"/></div><div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn soft closeModal">Cancel</button><button class="btn primary" id="saveRecruiter">Save Account</button></div></div></div>
+<div class="modal" id="positionModal"><div class="modalBox"><h2>🎯 New Hiring Quest</h2><div class="field"><label>Position</label><input id="pName"/></div>
+<div class="field"><label>Direct Manager</label><input id="pManager" placeholder="Direct manager name"/></div>
+<div class="field"><label>Job Description</label><textarea id="pJD" placeholder="Paste the job description here" rows="6"></textarea></div><div class="field"><label>Assign Recruiter</label><select id="pRecruiter"></select></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="field"><label>Open Date</label><input id="pOpen" type="date"/></div><div class="field"><label>Target Joining</label><input id="pTarget" type="date"/></div></div><div class="field"><label>Difficulty</label><select id="pDifficulty"><option value="normal">Normal</option><option value="difficult">🔥 Difficult</option><option value="very">🔥🔥 Very Difficult</option><option value="critical">💎 Critical</option></select></div><div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn soft closeModal">Cancel</button><button class="btn primary" id="savePosition">Add Quest</button></div></div></div>
+<div class="modal" id="closedPositionModal"><div class="modalBox"><h2>🏆 Add Pre-Game / Closed Position</h2><div style="font-size:11px;color:#6680a4;margin:-6px 0 12px">Use this for positions the recruiter closed before the game launched. They will appear as Pre-Game Wins for recognition and history, but will not add game points or milestone progress.</div>
+<div class="field"><label>Position</label><input id="hName"/></div>
+<div class="field"><label>Recruiter</label><select id="hRecruiter"></select></div>
+<div class="field"><label>Candidate Name</label><input id="hCandidate"/></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="field"><label>Position Open Date</label><input id="hOpen" type="date"/></div><div class="field"><label>Target Joining Date</label><input id="hTarget" type="date"/></div></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="field"><label>Offer Issuance Date</label><input id="hOffer" type="date"/></div><div class="field"><label>Actual Joining Date</label><input id="hJoin" type="date"/></div></div>
+<div class="field"><label>Difficulty</label><select id="hDifficulty"><option value="normal">Normal</option><option value="difficult">🔥 Difficult</option><option value="very">🔥🔥 Very Difficult</option><option value="critical">💎 Critical</option></select></div>
+<div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn soft closeModal">Cancel</button><button class="btn yellow" id="saveHistoricalClosed">🏆 Add Hiring Win</button></div>
+</div></div>
+<div class="modal" id="positionDetailModal"><div class="modalBox detailBox">
+<div class="detailTop"><div><span class="detailEyebrow">OPEN POSITION</span><h2 id="dPosName"></h2></div><button class="xClose closeModal">×</button></div>
+<div id="dPosStatus"></div>
+<div class="detailGrid"><div><small>Direct Manager</small><b id="dPosManager"></b></div><div><small>Difficulty</small><b id="dPosDifficulty"></b></div><div><small>Open Date</small><b id="dPosOpen"></b></div><div><small>Target Joining Date</small><b id="dPosTarget"></b></div></div>
+<div class="jdBox"><small>JOB DESCRIPTION</small><div id="dPosJD"></div></div>
+</div></div>
+<div class="modal" id="winDetailModal"><div class="modalBox detailBox">
+<div class="detailTop"><div><span class="detailEyebrow">HIRING WIN</span><h2 id="dWinName"></h2></div><button class="xClose closeModal">×</button></div>
+<div id="dWinLegacy"></div>
+<div class="detailGrid"><div><small>Candidate</small><b id="dWinCandidate"></b></div><div><small>Difficulty</small><b id="dWinDifficulty"></b></div><div><small>Position Opened</small><b id="dWinOpen"></b></div><div><small>Offer Issued</small><b id="dWinOffer"></b></div><div><small>Target Joining</small><b id="dWinTarget"></b></div><div><small>Actual Joining</small><b id="dWinJoin"></b></div><div><small>Time to Fill</small><b id="dWinTTF"></b></div><div><small>Game Points</small><b id="dWinPoints"></b></div></div>
+<div class="jdBox"><small>ACHIEVEMENTS</small><div id="dWinAchievements"></div></div>
+</div></div>
+<div class="modal" id="closeModal"><div class="modalBox"><h2>🎉 Close Hiring Quest</h2><input id="closeId" type="hidden"/><div id="closeTitle" style="font-weight:900"></div><div class="field"><label>Candidate</label><input id="cCandidate"/></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="field"><label>Offer Issuance Date</label><input id="cOffer" type="date"/></div><div class="field"><label>Actual Joining Date</label><input id="cJoin" type="date"/></div></div><div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn soft closeModal">Cancel</button><button class="btn yellow" id="doClose">Close &amp; Celebrate</button></div></div></div>
+<div class="modal" id="levelModal"><div class="modalBox"><h2>🏅 Milestone</h2><input id="lId" type="hidden"/><div class="field"><label>Name</label><input id="lName"/></div><div class="field"><label>Points Required</label><input id="lPoints" min="1" type="number"/></div><div class="field"><label>Quote</label><textarea id="lQuote"></textarea></div><div class="field"><label>Reward</label><input id="lReward"/></div><label style="display:flex;gap:8px;align-items:center"><input id="lHidden" style="width:auto" type="checkbox"/> Hide reward until claimed</label><div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px"><button class="btn soft closeModal">Cancel</button><button class="btn primary" id="saveLevel">Save</button></div></div></div>
+
+<div class="modal" id="deleteTLModal"><div class="modalBox">
+<h2>👩‍💼 Reassign Team Before Deleting</h2>
+<input id="deleteTLId" type="hidden">
+<div id="deleteTLMessage" style="font-size:12px;line-height:1.7;color:#55739c;margin:8px 0 15px"></div>
+<div class="field"><label>Move recruiters to</label><select id="deleteTLTarget"></select></div>
+<div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn soft closeModal">Cancel</button><button class="btn danger" id="confirmDeleteTL">Move Recruiters & Delete Team Leader</button></div>
+</div></div>
+
+<div class="modal" id="reassignPositionModal"><div class="modalBox">
+<h2>↔ Reassign Position</h2>
+<input id="reassignPositionId" type="hidden">
+<div style="font-size:12px;color:#6680a4;margin:5px 0 12px">Position: <b id="reassignPositionName"></b></div>
+<div class="field"><label>Assign to Recruiter</label><select id="reassignRecruiter"></select></div>
+<div style="font-size:11px;color:#6680a4;background:#f7fbff;border:1px solid #e1edf8;border-radius:12px;padding:10px;margin-bottom:12px">The position will move to the selected recruiter. Existing position details are preserved.</div>
+<div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn soft closeModal">Cancel</button><button class="btn primary" id="savePositionReassign">Save Reassignment</button></div>
+</div></div>
+
+<div class="celebrate" id="celebrate"><div class="party"><div class="trophy">🏆</div><div style="color:#f5222d;font-weight:900;letter-spacing:2px">NEW LEVEL UNLOCKED! 🎉</div><h1 id="celebrateName"></h1><div class="transition" id="celebrateTransition"></div><div id="celebrateQuote" style="font-style:italic;color:#55739c"></div><div class="reward" id="celebrateReward"></div><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px">
+<button class="btn red" id="claim" style="font-size:18px;padding:14px 28px">🎁 Claim Your Gift</button>
+<button class="btn soft hidden" id="celebrateClose" style="font-size:16px;padding:14px 24px">Close</button>
+</div></div></div>
+
+<div id="teamLeaderModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="tlModalTitle">
+  <div class="modalBox">
+    <div class="head"><h2 id="tlModalTitle">👩‍💼 Create Team Leader Profile</h2><button type="button" id="closeTeamLeaderModal" class="btn soft">✕</button></div>
+    <div class="field"><label for="tlName">Team Leader Name</label><input id="tlName" placeholder="e.g. Nourhan Badawy"></div>
+    <div class="field"><label for="tlTeam">Team Name</label><input id="tlTeam" placeholder="e.g. Talent Acquisition Team"></div>
+    <div class="field"><label for="tlPin">Login PIN</label><input id="tlPin" type="password" inputmode="numeric" placeholder="Minimum 4 characters"></div>
+    <div class="field"><label for="tlQuote">Personal Quote</label><input id="tlQuote" value="Great people build great things."></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px">
+      <button type="button" id="cancelTeamLeader" class="btn soft">Cancel</button>
+      <button type="button" id="saveTeamLeaderAdmin" class="btn primary">Create Team Leader</button>
+    </div>
+  </div>
+</div>
+<script>
+const KEY="intercomHiringWinsFreshV31";
+const defaultLevels=[
+{name:"🌱 First Win",points:10,quote:"Great journeys start with one win.",reward:"🍫 Chocolate Fix — Chocolate",hidden:true},
+{name:"✨ Momentum Maker",points:25,quote:"Small wins build big momentum.",reward:"☕ Coffee on Me — Coffee",hidden:true},
+{name:"🚀 Rising Recruiter",points:45,quote:"You're not just filling roles — you're building momentum.",reward:"🍰 Sweet Victory — Dessert of your choice",hidden:true},
+{name:"⭐ Hiring Star",points:70,quote:"Consistency is your new superpower.",reward:"🏠 WFH Pass — Extra WFH day",hidden:true},
+{name:"🔥 Hiring Pro",points:100,quote:"Great recruiters don't wait for talent. They find it.",reward:"📚 Level-Up Pass — Learning of your choice",hidden:true},
+{name:"🎯 Talent Hunter",points:135,quote:"Every hire grows the team. Every challenge grows you.",reward:"🎁 Mystery Box — Small surprise gift",hidden:true},
+{name:"🥇 Hiring Master",points:175,quote:"You've turned hiring into a craft.",reward:"🎓 Learning Unlock — Course of your choice within a budget",hidden:true},
+{name:"💎 Talent Legend",points:220,quote:"Your growth is part of the win.",reward:"🌴 Golden Day Off — One day off in the next week",hidden:true},
+{name:"👑 Recruitment Royalty",points:270,quote:"Big wins deserve a real celebration.",reward:"🍫 Chocolate Fix — Chocolate",hidden:true},
+{name:"🏆 Hiring Champion",points:325,quote:"You didn't just play the game. You raised the game.",reward:"🏆 Hiring Champion Trophy — Winner's desk trophy for the month",hidden:true}
+];
+let S;try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+if(!S)S={users:[{id:"admin",role:"admin",name:"Admin",pin:"0000",photo:"",quote:"Game Administrator"}],levels:defaultLevels,positions:[],notifications:[],celebrations:[]};
+["users","levels","positions","notifications","celebrations"].forEach(k=>S[k]||(S[k]=[]));
+if(!S.users.some(u=>u.role==="admin"))S.users.unshift({id:"admin",role:"admin",name:"Admin",pin:"0000",photo:"",quote:"Game Administrator"});
+let current=null;
+const diffPts={normal:0,difficult:1,very:2,critical:3},diffLabel={normal:"Normal",difficult:"Difficult",very:"Very Difficult",critical:"Critical"};
+const $=id=>document.getElementById(id), save=()=>localStorage.setItem(KEY,JSON.stringify(S));
+function esc(v=""){return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+function avatar(u,cls="avatar"){return u.photo?`<img class="${cls}" src="${u.photo}" alt="${esc(u.name)}">`:`<div class="${cls} initials">${esc(u.name.split(/\s+/).map(x=>x[0]).join("").slice(0,2).toUpperCase())}</div>`}
+function dt(x){if(!x)return null;let [y,m,d]=x.split("-").map(Number);return Date.UTC(y,m-1,d)}function days(a,b){return Math.round((dt(b)-dt(a))/86400000)}
+function pts(p){if(p.legacy)return 0;return p.closed?3+diffPts[p.difficulty]+(p.early?2:0)+(p.improved?2:0)+(p.major?1:0):0}
+function userPts(id){return S.positions.filter(p=>p.recruiterId===id).reduce((n,p)=>n+pts(p),0)}
+function info(id){
+ let P=userPts(id),ls=[...S.levels].sort((a,b)=>a.points-b.points),idx=-1,cumulative=0;
+ for(let i=0;i<ls.length;i++){cumulative+=Number(ls[i].points)||0;if(P>=cumulative)idx=i;else break}
+ let completedTotal=idx>=0?ls.slice(0,idx+1).reduce((n,l)=>n+(Number(l.points)||0),0):0;
+ let next=ls[idx+1]||null;
+ let stageEarned=Math.max(0,P-completedTotal);
+ let stageRequired=next?Number(next.points)||0:0;
+ return{P,ls,idx,current:idx>=0?ls[idx]:null,next,completedTotal,stageEarned,stageRequired}
+}
+function notify(uid,title,text){S.notifications.unshift({id:Date.now()+Math.random(),uid,title,text,read:false,at:new Date().toLocaleString()})}
+function populateLogin(){loginAccount.innerHTML=S.users.map(u=>`<option value="${u.id}">${esc(u.name)} — ${u.role==="admin"?"Admin":u.role==="leader"?"Team Leader":"Recruiter"}</option>`).join("")}
+function loginNow(){
+ let u=S.users.find(x=>x.id===loginAccount.value);
+ if(!u||u.pin!==loginPin.value){alert("Incorrect PIN.");return}
+ current=u;
+ login.classList.add("hidden");
+ app.classList.remove("hidden");
+ adminNav.classList.toggle("hidden",u.role==="admin"||u.role==="recruiter");
+ gameNav.classList.toggle("hidden",u.role!=="recruiter");
+ addPosGame.classList.add("hidden");
+
+ if(u.role==="admin"){
+   showSystemAdmin();
+ }else if(u.role==="leader"){
+   showAdmin();
+ }else{
+   // Check and open earned milestone FIRST. This is intentionally independent
+   // from the recruiter dashboard/leaderboard rendering.
+   ensureEarnedCelebrations(u.id);
+   openPendingCelebrationNow();
+   showGame();
+ }
+}
+function logout(){let overlay=document.getElementById("celebrate");if(overlay){overlay.classList.remove("show");overlay.style.display=""}current=null;app.classList.add("hidden");login.classList.remove("hidden");loginPin.value=""}
+function render(){if(!current)return;topAvatar.innerHTML=avatar(current);topName.textContent=current.name;topRole.textContent=current.role==="admin"?"Admin":current.role==="leader"?"Team Leader":"Recruiter";enforceRoleControls();if(current.role==="admin")renderSystemAdminOnly();else if(current.role==="leader")renderAdmin();else renderGame()}
+function renderGame(){
+ let target=current.role==="leader"?(S.users.find(u=>u.role==="recruiter")||current):current, I=info(target.id), own=S.positions.filter(p=>p.recruiterId===target.id), closedP=own.filter(p=>p.closed),ttfs=closedP.map(p=>p.ttf).filter(Number.isFinite);
+ profileAvatar.innerHTML=avatar(target);welcomeName.textContent=target.name+"! 👋";profileQuote.textContent=`“${target.quote||"You make opportunities happen!"}”`;ptsEl=pts; 
+ document.getElementById("pts").textContent=I.P;
+ let legacyWins=S.positions.filter(p=>p.recruiterId===target.id&&p.closed&&p.legacy);
+ let legacyPts=legacyWins.reduce((a,p)=>a+pts(p),0);
+ let legacyCard=document.getElementById("legacyLaunchCard");
+ if(legacyCard){legacyCard.classList.toggle("hidden",legacyWins.length===0);let txt=document.getElementById("legacyLaunchText");if(txt&&legacyWins.length)txt.innerHTML=`Before the game started, you had already closed <b>${legacyWins.length} position${legacyWins.length===1?"":"s"}</b> 🏆<br>They are proudly recorded as <b>Pre-Game Wins</b>, but they do <b>not</b> count toward your game points or milestones.<br><b>Your game starts from 0 points — your previous wins remain part of your story.</b>`;}
+document.getElementById("positionsClosedCount").textContent=closedP.length;document.getElementById("avgTtfValue").textContent=ttfs.length?Math.round(ttfs.reduce((a,b)=>a+b,0)/ttfs.length):"—";
+ let cur=I.current||{name:"Getting Started",quote:"Every great hiring story starts with the first win."};levelName.textContent=cur.name;levelQuote.textContent=`“${cur.quote}”`;levelEmoji.textContent=(cur.name.match(/^[^\w\s]+/)||["🌱"])[0];
+ if(I.next){let earned=I.stageEarned,required=I.stageRequired,pct=required?Math.max(0,Math.min(100,Math.round(earned/required*100))):0;xpBar.style.width=pct+"%";xpText.textContent=`${earned} / ${required} points`;milestoneCompletion.textContent=`${pct}% Milestone Completion`;toNext.textContent=`${Math.max(0,required-earned)} points to next level`}else{xpBar.style.width="100%";xpText.textContent=`${I.P} lifetime points`;milestoneCompletion.textContent="100% Milestone Completion";toNext.textContent="🔒 ??? — Next Mystery Milestone ♾️"}
+ let start=Math.max(0,I.idx-2);path.innerHTML=I.ls.slice(start,start+7).map((l,k)=>{let actual=start+k,st=actual<I.idx?"done":actual===I.idx?"current":"";return`<div class="node ${st}"><div class="bubble">${actual<=I.idx?"🏅":"☆"}</div><small>${esc(l.name.replace(/^[^\w]+/,""))}</small></div>`}).join("")+((start+7>=I.ls.length)?'<div class="node"><div class="bubble">∞</div><small>Beyond...</small></div>':"");
+ let opens=own.filter(p=>!p.closed);quests.innerHTML=opens.length?opens.map(p=>`<div class="quest clickableQuest" onclick="showPositionDetails('${p.id}')"><b>${esc(p.name)}</b><span class="pill ${p.status==="hold"?"hold":p.difficulty==="critical"?"critical":p.difficulty==="normal"?"normal":"difficult"}" style="float:right">${p.status==="hold"?"⏸ ON HOLD":diffLabel[p.difficulty]}</span><div class="meta"><span>👤 ${esc(p.manager||"Manager not added")}</span><span>📅 Opened: ${p.open}</span><span>🎯 Target: ${p.target}</span></div><small class="viewHint">Click to view position details →</small>${current.role==="leader"?`<button class="btn yellow closeQuest" data-id="${p.id}" onclick="event.stopPropagation()" style="margin-top:8px;padding:7px 10px">Close Position</button>`:""}</div>`).join(""):'<div style="padding:20px;text-align:center;color:#6680a4">No open positions right now.</div>';
+ let winsP=[...closedP].sort((a,b)=>(b.offer||"").localeCompare(a.offer||""));wins.innerHTML=winsP.length?winsP.map(p=>`<div class="quest clickableQuest" onclick="showWinDetails('${p.id}')"><b>🏆 ${esc(p.name)}</b>${p.legacy?`<span class="preGameTag">🏁 PRE-GAME WIN</span><span style="float:right;font-weight:900;color:#6680a4">History only</span>`:`<span style="float:right;font-weight:900;color:#0068c9">+${pts(p)} pts</span>`}<div class="meta"><span>${esc(p.candidate)}</span><span>TTF: ${p.ttf} days</span></div><small class="viewHint">Click to view hiring win details →</small></div>`).join(""):'<div style="padding:20px;text-align:center;color:#6680a4">Your hiring wins will appear here 🎯</div>';
+ let allNs=S.notifications.filter(n=>n.uid===target.id);notifBadge.textContent=allNs.filter(n=>!n.read).length;
+ const perPage=5,totalPages=Math.max(1,Math.ceil(allNs.length/perPage));if(notifPage>=totalPages)notifPage=totalPages-1;if(notifPage<0)notifPage=0;
+ let ns=allNs.slice(notifPage*perPage,notifPage*perPage+perPage);
+ notices.innerHTML=ns.length?ns.map(n=>`<div class="notice"><div>${n.title.includes("Level")?"🏆":n.title.includes("Position")?"⭐":"🎯"}</div><div><b>${esc(n.title)}</b><small>${esc(n.text)}</small></div></div>`).join(""):'<div style="padding:15px;color:#6680a4">No notifications yet.</div>';
+ let pager=document.getElementById("notifPager");if(pager){pager.classList.toggle("hidden",allNs.length<=5);notifPageInfo.textContent=`${notifPage+1} / ${totalPages}`;notifPrev.disabled=notifPage===0;notifNext.disabled=notifPage>=totalPages-1;}
+ ns.forEach(n=>n.read=true);save();
+ let recs=S.users.filter(u=>u.role==="recruiter"&&(leaderboardMode==="all"||u.teamId===target.teamId)).sort((a,b)=>userPts(b.id)-userPts(a.id));leaderboard.innerHTML=recs.length?recs.map((u,i)=>{let p=userPts(u.id),max=Math.max(1,...recs.map(x=>userPts(x.id)));return`<div class="rank"><b>${i+1}</b>${avatar(u)}<div><b>${esc(u.name)}</b><div class="rankbar"><div style="width:${p/max*100}%"></div></div></div><b>${p}</b></div>`}).join(""):'<div style="padding:15px;color:#6680a4">Add recruiters to start.</div>';
+ document.querySelectorAll(".closeQuest").forEach(b=>b.onclick=()=>openClose(b.dataset.id));
+ setTimeout(showCelebration,100);
+}
+
+
+function leaderTeamId(){return current?.role==="leader"?current.teamId:null}
+
+function repairTeamAssignments(){
+ if(!Array.isArray(S.users))return;
+ const leaders=S.users.filter(u=>u.role==="leader");
+ const recruiters=S.users.filter(u=>u.role==="recruiter");
+ let changed=false;
+ recruiters.forEach(r=>{
+   if(!r.teamId){
+     // If there is only one Team Leader, an unassigned legacy recruiter belongs to that team.
+     if(leaders.length===1){r.teamId=leaders[0].teamId;changed=true}
+   }
+ });
+ if(changed)save();
+}
+function visibleRecruiters(){
+ let r=S.users.filter(u=>u.role==="recruiter");
+ if(current?.role!=="leader")return r;
+ let own=r.filter(u=>u.teamId===current.teamId);
+ if(own.length)return own;
+ let leaders=S.users.filter(u=>u.role==="leader");
+ if(leaders.length===1)return r.filter(u=>!u.teamId||u.teamId===current.teamId);
+ return own;
+}
+function teamName(teamId){let l=S.users.find(u=>u.role==="leader"&&u.teamId===teamId);return l?.teamName||l?.name||"Team"}
+function createTeamLeader(){
+ const name=document.getElementById("tlName"),team=document.getElementById("tlTeam"),pin=document.getElementById("tlPin"),quote=document.getElementById("tlQuote");
+ name.value="";team.value="";pin.value="";quote.value="Great people build great things.";
+ modal("teamLeaderModal",true);setTimeout(()=>name.focus(),0);
+}
+function saveTL(){
+ const name=document.getElementById("tlName").value.trim(),team=document.getElementById("tlTeam").value.trim(),pin=document.getElementById("tlPin").value.trim(),quote=document.getElementById("tlQuote").value.trim();
+ if(!name||!team||pin.length<4){alert("Please enter the Team Leader name, team name and a PIN of at least 4 characters.");return}
+ let id="tl"+Date.now(),teamId="team_"+Date.now();
+ S.users.push({id,role:"leader",teamId,teamName:team,name,pin,photo:"",quote});
+ save();populateLogin();modal("teamLeaderModal",false);renderSystemAdminOnly();
+}
+
+function showSystemAdmin(){
+ if(current?.role!=="admin")return;
+ hideAllRoleViews();systemAdminView.classList.remove("hidden");renderSystemAdminOnly()
+}
+function enforceRoleControls(){
+ const addTL=document.getElementById("newTeamLeaderAdmin");
+ if(addTL)addTL.style.display=current?.role==="admin"?"":"none";
+}
+function renderSystemAdminOnly(){
+ if(current?.role!=="admin")return;
+ let leaders=S.users.filter(u=>u.role==="leader");
+ adminTeamLeaderProfiles.innerHTML=leaders.length?leaders.map(l=>{
+   let rs=S.users.filter(u=>u.role==="recruiter"&&u.teamId===l.teamId);
+   return `<div class="adminLeaderProfile">${avatar(l)}<div class="grow"><b>${esc(l.name)}</b><small>${esc(l.teamName||"Recruitment Team")} • ${rs.length} recruiter${rs.length===1?"":"s"}</small></div><span class="pill normal">TEAM LEADER</span><button class="btn danger deleteTL" data-id="${l.id}">Delete</button></div>`
+ }).join(""):`<div class="adminEmpty">No Team Leaders yet. Create the first Team Leader to start building the hierarchy.</div>`;
+
+ let allRecs=S.users.filter(u=>u.role==="recruiter");
+ let rows=leaders.map(l=>{
+   let rs=allRecs.filter(r=>r.teamId===l.teamId),teamPts=rs.reduce((n,r)=>n+userPts(r.id),0);
+   let closed=S.positions.filter(p=>p.closed&&rs.some(r=>r.id===p.recruiterId)).length;
+   return {l,rs,teamPts,closed}
+ }).sort((a,b)=>b.teamPts-a.teamPts);
+ companyPerformance.innerHTML=leaders.length?`
+   <div class="companyStats"><div><b>${leaders.length}</b><small>Team Leaders</small></div><div><b>${allRecs.length}</b><small>Recruiters</small></div><div><b>${S.positions.filter(p=>p.closed).length}</b><small>Positions Closed</small></div><div><b>${allRecs.reduce((n,r)=>n+userPts(r.id),0)}</b><small>Total Game Points</small></div></div>
+   <div class="performanceTable"><div class="perfHead"><b>Team Leader / Team</b><b>Recruiters</b><b>Closed</b><b>Points</b></div>
+   ${rows.map(x=>`<div class="perfRow"><div><b>${esc(x.l.name)}</b><small>${esc(x.l.teamName||"Recruitment Team")}</small></div><span>${x.rs.length}</span><span>${x.closed}</span><strong>${x.teamPts}</strong></div>`).join("")}</div>
+   ${allRecs.length?`<div class="recruiterPerfTitle">Recruiter Performance</div>${allRecs.sort((a,b)=>userPts(b.id)-userPts(a.id)).map(r=>{let I=info(r.id);return `<div class="recruiterPerf">${avatar(r)}<div class="grow"><b>${esc(r.name)}</b><small>${esc(teamName(r.teamId))} • ${I.current?esc(I.current.name):"Getting Started"}</small></div><strong>${I.P} pts</strong></div>`}).join("")}`:""}
+ `:`<div class="adminEmpty">Performance will appear here after Team Leaders create their recruiters.</div>`;
+
+ teamsHierarchy.innerHTML=leaders.length?leaders.map(l=>{
+   let rs=allRecs.filter(r=>r.teamId===l.teamId);
+   return `<div class="hierTeam"><div class="hierLeader">${avatar(l)}<div><b>${esc(l.name)}</b><small>${esc(l.teamName||"Recruitment Team")}</small></div></div><div class="hierBranch">${rs.length?rs.map(r=>`<div class="hierRecruiter"><span>↳</span>${avatar(r)}<div><b>${esc(r.name)}</b><small>${userPts(r.id)} pts • ${S.positions.filter(p=>p.recruiterId===r.id&&p.closed).length} closed</small></div></div>`).join(""):`<div class="hierEmpty">↳ No recruiters created yet</div>`}</div></div>`
+ }).join(""):`<div class="adminEmpty">Your organization hierarchy will appear here once you create a Team Leader.</div>`;
+ document.querySelectorAll(".deleteTL").forEach(b=>b.onclick=()=>deleteTeamLeader(b.dataset.id));
+}
+function renderSystemAdmin(){
+ let panel=document.getElementById("systemAdminPanel");if(!panel)return;
+ panel.classList.toggle("hidden",current?.role!=="admin");if(current?.role!=="admin")return;
+ let leaders=S.users.filter(u=>u.role==="leader");
+ teamLeaderList.innerHTML=leaders.length?leaders.map(l=>{let rs=S.users.filter(u=>u.role==="recruiter"&&u.teamId===l.teamId);return `<div class="accountRow">${avatar(l)}<div><b>${esc(l.name)}</b><small>${esc(l.teamName||"Team")} • ${rs.length} recruiter${rs.length===1?"":"s"}</small></div><span class="pill normal">TEAM LEADER</span></div>`}).join(""):'<div style="padding:15px;color:#6680a4">No Team Leaders yet. Click “＋ Team Leader” to create the first team and begin the game.</div>';
+}
+function renderAdminProgress(){
+ let box=document.getElementById("adminProgress");if(!box)return;
+ let recs=visibleRecruiters();
+ if(!recs.length){box.innerHTML='<div style="padding:18px;text-align:center;color:#6680a4">Create a recruiter account to start tracking progress.</div>';return}
+ box.innerHTML=recs.map(u=>{
+   let I=info(u.id),cur=I.current||{name:"🌱 Getting Started",points:0},next=I.next;
+   let pct=next&&I.stageRequired?Math.max(0,Math.min(100,Math.round(I.stageEarned/I.stageRequired*100))):100;
+   let remaining=next?Math.max(0,I.stageRequired-I.stageEarned):0;
+   return `<div class="adminProgressRow">
+    <div class="adminProgressPerson">${avatar(u)}<div><b>${esc(u.name)}</b><small>${esc(cur.name)} • ${I.P} game points</small></div></div>
+    <div class="adminProgressMiddle"><div class="adminProgressLabels"><b>${pct}% to ${next?esc(next.name):"Next Mystery Milestone"}</b><span>${next?remaining+" pts remaining":"♾️ Journey continues"}</span></div><div class="adminXp"><div style="width:${pct}%"></div></div></div>
+    <div class="nextTreat"><small>🎁 NEXT REWARD — ONLY YOU CAN SEE THIS</small><b>${esc(next?.reward||"Add the next mystery milestone")}</b><span>${next?"Requires "+next.points+" new points":"Create another milestone when ready"}</span></div>
+   </div>`;
+ }).join("");
+}
+function renderAdmin(){
+ renderSystemAdmin();renderAdminProgress();
+ if(!current||current.role!=="leader")return;
+ let recs=visibleRecruiters();
+ recruiterList.innerHTML=recs.length?recs.map(u=>`<div class="recruiter">${avatar(u)}<div style="flex:1;min-width:0"><b>${esc(u.name)}</b><small style="display:block;color:#6680a4">${userPts(u.id)} pts • ${S.positions.filter(p=>p.recruiterId===u.id&&p.closed).length} wins</small></div><button class="btn soft editRec" data-id="${u.id}">Edit</button><button class="btn danger deleteRec" data-id="${u.id}">Delete</button></div>`).join(""):'<div style="padding:20px;text-align:center;color:#6680a4">Create recruiter accounts here. Each recruiter will only see their own Hiring Game.</div>';
+ let recIds=new Set(recs.map(r=>r.id));
+ let teamPositions=S.positions.filter(p=>recIds.has(p.recruiterId));
+ adminPositions.innerHTML=teamPositions.length?`<table class="table"><thead><tr><th>Position</th><th>Recruiter</th><th>Status</th><th>Points</th><th></th></tr></thead><tbody>${teamPositions.map(p=>{let u=S.users.find(x=>x.id===p.recruiterId);return`<tr><td><b>${esc(p.name)}</b><br><small>${diffLabel[p.difficulty]||esc(p.difficulty||"Normal")}</small></td><td>${esc(u?.name||"—")}</td><td>${p.closed?(p.legacy?"🏁 Pre-Game":"✅ Closed"):(p.status==="hold"?"⏸ On Hold":"🎯 Open")}</td><td>${p.closed?pts(p):"—"}</td><td><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn soft reassignPos" data-id="${p.id}">↔ Reassign</button>${!p.closed?`<button class="btn yellow closeQuest" data-id="${p.id}">Close</button>`:""}<button class="btn danger deletePos" data-id="${p.id}">Delete</button></div></td></tr>`}).join("")}</tbody></table>`:'<div style="padding:20px;text-align:center;color:#6680a4">No positions yet.</div>';
+ adminLevels.innerHTML=`<table class="table"><thead><tr><th>Level</th><th>Points</th><th>Reward</th><th></th></tr></thead><tbody>${[...S.levels].sort((a,b)=>a.points-b.points).map((l,i)=>`<tr><td><b>${esc(l.name)}</b><br><small>“${esc(l.quote)}”</small></td><td>${l.points}</td><td>${l.hidden?"🔒 ":""}${esc(l.reward||"—")}</td><td><button class="btn soft editLevel" data-p="${l.points}">Edit</button></td></tr>`).join("")}</tbody></table>`;
+ document.querySelectorAll(".editRec").forEach(b=>b.onclick=()=>openRecruiter(b.dataset.id));
+ document.querySelectorAll(".deleteRec").forEach(b=>b.onclick=()=>deleteRecruiter(b.dataset.id));
+ document.querySelectorAll(".closeQuest").forEach(b=>b.onclick=()=>openClose(b.dataset.id));
+ document.querySelectorAll(".reassignPos").forEach(b=>b.onclick=()=>openPositionReassign(b.dataset.id));
+ document.querySelectorAll(".deletePos").forEach(b=>b.onclick=()=>deletePosition(b.dataset.id));
+ document.querySelectorAll(".editLevel").forEach(b=>b.onclick=()=>openLevel(Number(b.dataset.p)));
+}
+function deleteRecruiter(id){
+ let u=S.users.find(x=>x.id===id&&x.role==="recruiter");if(!u)return;
+ let count=S.positions.filter(p=>p.recruiterId===id).length;
+ if(!confirm(`Delete recruiter "${u.name}"?${count?`\n\nThis will also permanently delete ${count} position${count===1?"":"s"} assigned to this recruiter.`:""}`))return;
+ S.positions=S.positions.filter(p=>p.recruiterId!==id);
+ S.notifications=S.notifications.filter(n=>n.uid!==id);
+ S.celebrations=S.celebrations.filter(c=>c.uid!==id);
+ S.users=S.users.filter(x=>x.id!==id);
+ save();populateLogin();render();
+}
+function openPositionReassign(id){
+ let p=S.positions.find(x=>x.id===id);if(!p)return;
+ let recs=visibleRecruiters();
+ if(recs.length<2){alert("Create or assign another recruiter to your team before reassigning this position.");return}
+ document.getElementById("reassignPositionId").value=id;
+ document.getElementById("reassignPositionName").textContent=p.name;
+ document.getElementById("reassignRecruiter").innerHTML=recs.map(r=>`<option value="${r.id}" ${r.id===p.recruiterId?"selected":""}>${esc(r.name)}</option>`).join("");
+ modal("reassignPositionModal",true);
+}
+function savePositionReassign(){
+ let id=document.getElementById("reassignPositionId").value,newId=document.getElementById("reassignRecruiter").value;
+ let p=S.positions.find(x=>x.id===id);if(!p)return;
+ if(newId===p.recruiterId){modal("reassignPositionModal",false);return}
+ let oldRec=S.users.find(x=>x.id===p.recruiterId),newRec=S.users.find(x=>x.id===newId);
+ if(!newRec)return;
+ let oldId=p.recruiterId;
+ p.recruiterId=newId;
+ notify(newId,"↔ Position Assigned to You",`${p.name} has been reassigned to you.`);
+ if(oldRec)notify(oldId,"↔ Position Reassigned",`${p.name} has been reassigned to ${newRec.name}.`);
+ save();modal("reassignPositionModal",false);render();
+}function deletePosition(id){
+ let p=S.positions.find(x=>x.id===id);if(!p)return;
+ if(!confirm(`Delete position "${p.name}" permanently?`))return;
+ S.positions=S.positions.filter(x=>x.id!==id);save();render();
+}
+function deleteTeamLeader(id){
+ if(current?.role!=="admin")return;
+ let l=S.users.find(x=>x.id===id&&x.role==="leader");if(!l)return;
+ let recs=S.users.filter(r=>r.role==="recruiter"&&r.teamId===l.teamId);
+ let otherLeaders=S.users.filter(x=>x.role==="leader"&&x.id!==id);
+
+ if(recs.length && !otherLeaders.length){
+   alert(`"${l.name}" still has ${recs.length} recruiter${recs.length===1?"":"s"}.\n\nCreate another Team Leader first, then reassign the recruiter(s) before deleting this Team Leader.`);
+   return;
+ }
+ if(recs.length){
+   openTeamReassign(id);
+   return;
+ }
+ if(!confirm(`Delete Team Leader "${l.name}"?\n\nNo recruiter accounts or positions will be deleted.`))return;
+ S.users=S.users.filter(u=>u.id!==id);
+ save();populateLogin();renderSystemAdminOnly();
+}
+function openTeamReassign(leaderId){
+ let l=S.users.find(x=>x.id===leaderId&&x.role==="leader");if(!l)return;
+ let recs=S.users.filter(r=>r.role==="recruiter"&&r.teamId===l.teamId);
+ let leaders=S.users.filter(x=>x.role==="leader"&&x.id!==leaderId);
+ document.getElementById("deleteTLId").value=leaderId;
+ document.getElementById("deleteTLMessage").innerHTML=`<b>${esc(l.name)}</b> currently has <b>${recs.length} recruiter${recs.length===1?"":"s"}</b>.<br>Choose a Team Leader below. The recruiter accounts — together with all their positions, wins and points — will move to the selected team.`;
+ document.getElementById("deleteTLTarget").innerHTML=leaders.map(x=>`<option value="${x.id}">${esc(x.name)} — ${esc(x.teamName||"Recruitment Team")}</option>`).join("");
+ modal("deleteTLModal",true);
+}
+function confirmDeleteTLReassign(){
+ let id=document.getElementById("deleteTLId").value,targetId=document.getElementById("deleteTLTarget").value;
+ let l=S.users.find(x=>x.id===id&&x.role==="leader"),target=S.users.find(x=>x.id===targetId&&x.role==="leader");
+ if(!l||!target)return;
+ let recs=S.users.filter(r=>r.role==="recruiter"&&r.teamId===l.teamId);
+ if(!confirm(`Move ${recs.length} recruiter${recs.length===1?"":"s"} to "${target.name}" and then delete "${l.name}"?\n\nRecruiter accounts, positions, wins and points will be preserved.`))return;
+ recs.forEach(r=>r.teamId=target.teamId);
+ S.users=S.users.filter(u=>u.id!==id);
+ save();populateLogin();modal("deleteTLModal",false);renderSystemAdminOnly();
+}
+function excelDate(v){
+ if(v===null||v===undefined||v==="")return "";
+ if(typeof v==="number"&&window.XLSX){let d=XLSX.SSF.parse_date_code(v);if(d)return `${d.y}-${String(d.m).padStart(2,"0")}-${String(d.d).padStart(2,"0")}`}
+ let s=String(v).trim();
+ let m=s.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/);if(m)return `${m[1]}-${m[2].padStart(2,"0")}-${m[3].padStart(2,"0")}`;
+ let d=new Date(s);return isNaN(d)?s:d.toISOString().slice(0,10);
+}
+function normalizeDifficulty(v){
+ let s=String(v||"Normal").trim().toLowerCase().replace(/[_-]+/g," ");
+ if(s.includes("critical")||s.includes("hard to fill"))return"critical";
+ if(s.includes("very"))return"very";
+ if(s.includes("difficult"))return"difficult";
+ return"normal";
+}
+function downloadPositionsTemplate(){
+ if(!window.XLSX){alert("Excel tools are still loading. Please check your internet connection and try again.");return}
+ let rows=[
+  {"Position":"Network Security Engineer","Recruiter":"Recruiter Name","Direct Manager":"Manager Name","Job Description":"Paste job description here","Open Date":"2026-09-07","Target Joining Date":"2026-10-15","Difficulty":"Difficult"}
+ ];
+ let ws=XLSX.utils.json_to_sheet(rows);
+ ws["!cols"]=[{wch:30},{wch:24},{wch:24},{wch:50},{wch:15},{wch:20},{wch:18}];
+ let wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,"Positions");
+ let guide=XLSX.utils.aoa_to_sheet([
+  ["Hiring Wins — Positions Upload Guide"],
+  ["Recruiter","Must exactly match a recruiter account in your team."],
+  ["Difficulty","Use: Normal, Difficult, Very Difficult, or Critical."],
+  ["Dates","Recommended format: YYYY-MM-DD."],
+  ["Required fields","Position, Recruiter, Open Date, Target Joining Date."],
+  ["Optional fields","Direct Manager, Job Description."]
+ ]);
+ XLSX.utils.book_append_sheet(wb,guide,"Instructions");
+ XLSX.writeFile(wb,"Hiring_Wins_Positions_Upload_Template.xlsx");
+}
+async function uploadPositionsExcel(file){
+ if(!file)return;
+ if(!window.XLSX){alert("Excel tools are still loading. Please check your internet connection and try again.");return}
+ try{
+  let data=await file.arrayBuffer(),wb=XLSX.read(data,{type:"array",cellDates:false}),ws=wb.Sheets[wb.SheetNames[0]];
+  let rows=XLSX.utils.sheet_to_json(ws,{defval:""});
+  if(!rows.length){alert("The spreadsheet has no position rows.");return}
+  let recs=visibleRecruiters(),byName=new Map(recs.map(r=>[r.name.trim().toLowerCase(),r]));
+  let added=0,errors=[];
+  rows.forEach((row,i)=>{
+   let name=String(row["Position"]||"").trim(),recName=String(row["Recruiter"]||"").trim();
+   let open=excelDate(row["Open Date"]),target=excelDate(row["Target Joining Date"]);
+   if(!name||!recName||!open||!target){errors.push(`Row ${i+2}: missing Position, Recruiter, Open Date or Target Joining Date.`);return}
+   let rec=byName.get(recName.toLowerCase());if(!rec){errors.push(`Row ${i+2}: recruiter "${recName}" was not found in your team.`);return}
+   let p={id:"p"+Date.now()+"_"+i,name,recruiterId:rec.id,open,target,difficulty:normalizeDifficulty(row["Difficulty"]),manager:String(row["Direct Manager"]||"").trim(),jd:String(row["Job Description"]||"").trim(),status:"open",closed:false};
+   S.positions.push(p);notify(rec.id,"⭐ New Position Added",`${p.name} has been assigned to you.`);added++;
+  });
+  if(added){save();render()}
+  let msg=`${added} position${added===1?"":"s"} uploaded successfully.`;
+  if(errors.length)msg+=`\n\n${errors.length} row${errors.length===1?"":"s"} could not be uploaded:\n`+errors.slice(0,8).join("\n")+(errors.length>8?`\n…and ${errors.length-8} more.`:"");
+  alert(msg);
+ }catch(e){console.error(e);alert("I couldn't read this Excel file. Please use the downloaded Hiring Wins template and try again.")}
+ finally{document.getElementById("positionsExcelFile").value=""}
+}
+
+function hideAllRoleViews(){
+ const sys=document.getElementById("systemAdminView"),lead=document.getElementById("adminView"),rec=document.getElementById("gameView");
+ if(sys)sys.classList.add("hidden");if(lead)lead.classList.add("hidden");if(rec)rec.classList.add("hidden");
+}
+function showGame(){
+ if(current?.role!=="recruiter")return;
+ notifPage=0;hideAllRoleViews();gameView.classList.remove("hidden");
+ gameNav.classList.add("active");adminNav.classList.remove("active");renderGame();
+}
+function showAdmin(){
+ if(current?.role!=="leader")return;
+ hideAllRoleViews();adminView.classList.remove("hidden");
+ adminNav.classList.add("active");gameNav.classList.remove("active");renderAdmin();
+}
+function modal(id,on=true){document.getElementById(id).classList.toggle("show",on)}
+function openRecruiter(id=""){let u=S.users.find(x=>x.id===id);rId.value=id;rName.value=u?.name||"";rPin.value=u?.pin||"";rQuote.value=u?.quote||"";rPhoto.value="";modal("recruiterModal")}
+async function saveRec(){let name=rName.value.trim(),pin=rPin.value.trim();if(!name||pin.length<4){alert("Enter a name and PIN of at least 4 characters.");return}let photo="",file=rPhoto.files[0];if(file){if(file.size>2_000_000){alert("Please use a photo under 2 MB.");return}photo=await new Promise(res=>{let fr=new FileReader();fr.onload=()=>res(fr.result);fr.readAsDataURL(file)})}let u=S.users.find(x=>x.id===rId.value);if(u){u.name=name;u.pin=pin;u.quote=rQuote.value.trim();if(photo)u.photo=photo}else{
+  u={id:"r"+Date.now(),role:"recruiter",teamId:current?.role==="leader"?current.teamId:null,name,pin,photo,quote:rQuote.value.trim()};
+  S.users.push(u);
+  notify(u.id,"👋 Welcome",`Welcome ${name}! Your Hiring Wins Journey is ready.`)
+}save();populateLogin();modal("recruiterModal",false);render()}
+function openPosition(){let recs=visibleRecruiters();if(!recs.length){alert("Create a recruiter account first.");return}pRecruiter.innerHTML=recs.map(u=>`<option value="${u.id}">${esc(u.name)}</option>`).join("");pName.value="";pManager.value="";pJD.value="";pOpen.value=new Date().toISOString().slice(0,10);pTarget.value="";pDifficulty.value="normal";modal("positionModal")}
+function savePos(){if(!pName.value.trim()||!pOpen.value||!pTarget.value){alert("Complete the position details.");return}let p={id:"p"+Date.now(),name:pName.value.trim(),recruiterId:pRecruiter.value,open:pOpen.value,target:pTarget.value,difficulty:pDifficulty.value,manager:pManager.value.trim(),jd:pJD.value.trim(),status:"open",closed:false};S.positions.push(p);notify(p.recruiterId,"⭐ New Position Added",`${p.name} has been assigned to you.`);save();modal("positionModal",false);render()}
+
+function toggleHold(id){
+ let p=S.positions.find(x=>x.id===id);if(!p||p.closed)return;
+ p.status=(p.status||"open")==="hold"?"open":"hold";
+ notify(p.recruiterId,p.status==="hold"?"⏸ Position On Hold":"▶ Position Resumed",`${p.name} is now ${p.status==="hold"?"on hold":"active again"}.`);
+ save();render();
+}
+function showPositionDetails(id){
+ let p=S.positions.find(x=>x.id===id);if(!p)return;
+ dPosName.textContent=p.name;dPosManager.textContent=p.manager||"Not added";dPosDifficulty.textContent=diffLabel[p.difficulty]||p.difficulty;
+ dPosOpen.textContent=p.open||"—";dPosTarget.textContent=p.target||"—";dPosJD.innerHTML=esc(p.jd||"No job description has been added yet.").replace(/\n/g,"<br>");
+ dPosStatus.innerHTML=p.status==="hold"?'<span class="statusBanner holdBanner">⏸ This position is currently ON HOLD</span>':'<span class="statusBanner openBanner">● ACTIVE POSITION</span>';
+ modal("positionDetailModal");
+}
+function showWinDetails(id){
+ let p=S.positions.find(x=>x.id===id);if(!p)return;
+ dWinName.textContent=p.name;dWinCandidate.textContent=p.candidate||"—";dWinDifficulty.textContent=diffLabel[p.difficulty]||p.difficulty;
+ dWinOpen.textContent=p.open||"—";dWinOffer.textContent=p.offer||"—";dWinTarget.textContent=p.target||"—";dWinJoin.textContent=p.join||"—";dWinTTF.textContent=Number.isFinite(p.ttf)?p.ttf+" days":"—";
+ dWinPoints.textContent=p.legacy?"Pre-Game — 0 points":"+"+pts(p)+" points";
+ dWinLegacy.innerHTML=p.legacy?'<span class="statusBanner legacyBanner">🏁 PRE-GAME WIN — Recognition only, no game points</span>':'';
+ let a=['🎯 Successful Hire'];if(p.difficulty!=="normal")a.push((p.difficulty==="critical"?"💎":p.difficulty==="very"?"🔥🔥":"🔥")+" "+diffLabel[p.difficulty]);if(p.early)a.push("⚡ Closed Early");if(p.improved)a.push("📉 Faster TTF");if(p.major)a.push("🚀 25%+ TTF Improvement");
+ dWinAchievements.innerHTML=a.map(x=>`<span class="achievementChip">${esc(x)}</span>`).join("");
+ modal("winDetailModal");
+}
+function openHistoricalClosed(){
+ let recs=visibleRecruiters();if(!recs.length){alert("Create a recruiter account first.");return}
+ hRecruiter.innerHTML=recs.map(u=>`<option value="${u.id}">${esc(u.name)}</option>`).join("");
+ hName.value="";hCandidate.value="";hOpen.value="";hTarget.value="";hOffer.value="";hJoin.value="";hDifficulty.value="normal";modal("closedPositionModal")
+}
+function saveHistorical(){
+ let rid=hRecruiter.value;
+ if(!hName.value.trim()||!hCandidate.value.trim()||!hOpen.value||!hTarget.value||!hOffer.value||!hJoin.value){alert("Complete all closed-position details.");return}
+ if(dt(hOffer.value)<dt(hOpen.value)||dt(hJoin.value)<dt(hOffer.value)){alert("Please check the dates.");return}
+ let before=info(rid);
+ let p={id:"p"+Date.now(),name:hName.value.trim(),recruiterId:rid,open:hOpen.value,target:hTarget.value,difficulty:hDifficulty.value,closed:true,legacy:true,candidate:hCandidate.value.trim(),offer:hOffer.value,join:hJoin.value};
+ p.ttf=days(p.open,p.offer);p.early=dt(p.offer)<dt(p.target);
+ let prev=S.positions.filter(x=>x.recruiterId===rid&&x.closed&&!x.legacy&&x.offer<p.offer).sort((a,b)=>b.offer.localeCompare(a.offer))[0];
+ p.improved=!!prev&&p.ttf<prev.ttf;p.major=p.improved&&prev.ttf>0&&((prev.ttf-p.ttf)/prev.ttf)>=.25;
+ S.positions.push(p);
+ let after=info(rid);notify(rid,"🏆 Pre-Game Win Added",`${p.name} has been added to your Pre-Game Wins. It is recognized in your history but does not add game points.`);
+ /* Pre-Game Wins intentionally do not advance milestones or unlock rewards. */
+ save();modal("closedPositionModal",false);render()
+}
+function openClose(id){let p=S.positions.find(x=>x.id===id);closeId.value=id;closeTitle.textContent=p.name;cCandidate.value="";cOffer.value="";cJoin.value="";modal("closeModal")}
+function closePos(){let p=S.positions.find(x=>x.id===closeId.value);if(!cCandidate.value.trim()||!cOffer.value||!cJoin.value){alert("Complete closing details.");return}let before=info(p.recruiterId);p.closed=true;p.candidate=cCandidate.value.trim();p.offer=cOffer.value;p.join=cJoin.value;p.ttf=days(p.open,p.offer);p.early=dt(p.offer)<dt(p.target);let prev=S.positions.filter(x=>x.id!==p.id&&x.recruiterId===p.recruiterId&&x.closed&&x.offer<=p.offer).sort((a,b)=>b.offer.localeCompare(a.offer))[0];p.improved=!!prev&&p.ttf<prev.ttf;p.major=p.improved&&prev.ttf>0&&((prev.ttf-p.ttf)/prev.ttf)>=.25;let after=info(p.recruiterId);notify(p.recruiterId,"🎯 Position Closed!",`${p.name} achieved — +${pts(p)} points.`);if(after.idx>before.idx){for(let i=before.idx+1;i<=after.idx;i++){let l=after.ls[i],old=i>0?after.ls[i-1]:null;S.celebrations.push({id:Date.now()+Math.random(),uid:p.recruiterId,level:l.name,old:old?.name||"Getting Started",quote:l.quote,reward:l.reward,hidden:l.hidden,seen:false,claimed:false});notify(p.recruiterId,"🏆 New Level Unlocked!",`You reached ${l.name}! Open the game and claim your reward.`)}}save();modal("closeModal",false);render();confetti()}
+function openLevel(points=null){let l=S.levels.find(x=>x.points===points);lId.value=l?S.levels.indexOf(l):"";lName.value=l?.name||"";lPoints.value=l?.points||((Math.max(0,...S.levels.map(x=>x.points)))+40);lQuote.value=l?.quote||"";lReward.value=l?.reward||"";lHidden.checked=l?.hidden??true;modal("levelModal")}
+function saveLev(){let obj={name:lName.value.trim(),points:Number(lPoints.value),quote:lQuote.value.trim(),reward:lReward.value.trim(),hidden:lHidden.checked};if(!obj.name||!obj.points||!obj.quote){alert("Enter name, points and quote.");return}if(lId.value==="")S.levels.push(obj);else S.levels[Number(lId.value)]=obj;save();modal("levelModal",false);render()}
+
+function ensureEarnedCelebrations(uid){
+ let u=S.users.find(x=>x.id===uid&&x.role==="recruiter");if(!u)return;
+ let I=info(uid),changed=false;
+ if(I.idx<0)return;
+ for(let i=0;i<=I.idx;i++){
+   let l=I.ls[i];
+   let existing=S.celebrations.find(c=>c.uid===uid&&c.level===l.name);
+   if(!existing){
+     let old=i>0?I.ls[i-1]:null;
+     S.celebrations.push({id:Date.now()+Math.random(),uid,level:l.name,old:old?.name||"Getting Started",quote:l.quote,reward:l.reward,hidden:l.hidden,seen:false,claimed:false});
+     changed=true;
+   }else if(existing.claimed===undefined){
+     // Legacy popup records could be marked seen by the old broken flow.
+     // They were never reliably claimed, so surface them once in the repaired flow.
+     existing.claimed=false;existing.seen=false;changed=true;
+   }
+ }
+ if(changed)save();
+}
+function openPendingCelebrationNow(){
+ if(!current||current.role!=="recruiter")return false;
+ ensureEarnedCelebrations(current.id);
+ let c=S.celebrations.find(x=>x.uid===current.id&&x.claimed!==true);
+ if(!c)return false;
+ let overlay=document.getElementById("celebrate");
+ document.getElementById("celebrateName").textContent=`Congratulations, ${current.name}!`;
+ document.getElementById("celebrateTransition").textContent=`${c.old}  →  ${c.level}`;
+ document.getElementById("celebrateQuote").textContent=`“${c.quote}”`;
+ document.getElementById("celebrateReward").textContent=c.hidden?"🎁 You unlocked a surprise gift! Claim it to reveal your reward.":`🎁 ${c.reward}`;
+ let btn=document.getElementById("claim");
+ btn.dataset.id=String(c.id);btn.textContent="🎁 Claim Your Gift";
+ let closeBtn=document.getElementById("celebrateClose");
+ if(closeBtn)closeBtn.classList.add("hidden");
+ overlay.classList.add("show");
+ overlay.style.display="flex";
+ confetti();
+ return true;
+}
+function showCelebration(){return openPendingCelebrationNow();}
+function claimReward(){
+ let btn=document.getElementById("claim"),c=S.celebrations.find(x=>String(x.id)===btn.dataset.id);if(!c)return;
+ document.getElementById("celebrateReward").textContent=`🎁 ${c.reward||"Your reward is ready!"}`;
+ btn.textContent="✓ Gift Claimed";
+ c.seen=true;c.claimed=true;save();
+ let closeBtn=document.getElementById("celebrateClose");
+ if(closeBtn)closeBtn.classList.remove("hidden");
+}
+function closeCelebration(){
+ let overlay=document.getElementById("celebrate");overlay.classList.remove("show");overlay.style.display="";
+ let closeBtn=document.getElementById("celebrateClose");if(closeBtn)closeBtn.classList.add("hidden");
+ showCelebration();
+}
+function confetti(){let cs=["#0569c8","#ffb70f","#f5222d","#fff"];for(let i=0;i<75;i++){let e=document.createElement("div");e.className="conf";e.style.left=Math.random()*100+"vw";e.style.background=cs[Math.floor(Math.random()*cs.length)];e.style.animationDelay=Math.random()*.8+"s";document.body.appendChild(e);setTimeout(()=>e.remove(),3400)}}
+loginBtn.onclick=loginNow;logoutNav.onclick=logout;notifPrev.onclick=()=>{if(notifPage>0){notifPage--;renderGame()}};notifNext.onclick=()=>{let target=current.role==="leader"?S.users.find(u=>u.role==="recruiter"):current;if(!target)return;let total=Math.ceil(S.notifications.filter(n=>n.uid===target.id).length/5);if(notifPage<total-1){notifPage++;renderGame()}};gameNav.onclick=showGame;adminNav.onclick=showAdmin;newRecruiter.onclick=()=>openRecruiter();saveRecruiter.onclick=saveRec;newPosition.onclick=openPosition;newClosedPosition.onclick=openHistoricalClosed;saveHistoricalClosed.onclick=saveHistorical;addPosGame.onclick=openPosition;savePosition.onclick=savePos;doClose.onclick=closePos;newLevel.onclick=()=>openLevel();saveLevel.onclick=saveLev;claim.onclick=claimReward;document.querySelectorAll(".closeModal").forEach(b=>b.onclick=()=>b.closest(".modal").classList.remove("show"));
+populateLogin();save();
+document.getElementById("celebrateClose")?.addEventListener("click",closeCelebration);
+if(document.getElementById("newTeamLeader"))newTeamLeader.onclick=createTeamLeader;
+if(document.getElementById("saveTeamLeader"))saveTeamLeader.onclick=saveTL;
+if(document.getElementById("teamBoardBtn"))teamBoardBtn.onclick=()=>{leaderboardMode="team";teamBoardBtn.classList.add("active");allBoardBtn.classList.remove("active");renderGame()};
+if(document.getElementById("allBoardBtn"))allBoardBtn.onclick=()=>{leaderboardMode="all";allBoardBtn.classList.add("active");teamBoardBtn.classList.remove("active");renderGame()};
+
+// Fresh startup
+repairTeamAssignments();
+populateLogin();
+
+document.getElementById("confirmDeleteTL")?.addEventListener("click",confirmDeleteTLReassign);
+document.getElementById("savePositionReassign")?.addEventListener("click",savePositionReassign);
+document.getElementById("downloadPositionTemplate")?.addEventListener("click",downloadPositionsTemplate);
+document.getElementById("uploadPositionsBtn")?.addEventListener("click",()=>document.getElementById("positionsExcelFile")?.click());
+document.getElementById("positionsExcelFile")?.addEventListener("change",e=>uploadPositionsExcel(e.target.files?.[0]));
+document.getElementById("newTeamLeaderAdmin")?.addEventListener("click",createTeamLeader);
+document.getElementById("saveTeamLeaderAdmin")?.addEventListener("click",saveTL);
+document.getElementById("closeTeamLeaderModal")?.addEventListener("click",()=>modal("teamLeaderModal",false));
+document.getElementById("cancelTeamLeader")?.addEventListener("click",()=>modal("teamLeaderModal",false));
+</script>
+<datalist id="rewardIdeas">
+<option value="🍫 Chocolate Fix — Chocolate">
+<option value="☕ Coffee on Me — Coffee">
+<option value="🍰 Sweet Victory — Dessert of your choice">
+<option value="🏠 WFH Pass — Extra WFH day">
+<option value="🌴 Golden Day Off — One day off in the next week">
+<option value="📚 Level-Up Pass — Learning of your choice">
+<option value="🎓 Learning Unlock — Course of your choice within a budget">
+<option value="🎁 Mystery Box — Small surprise gift">
+<option value="🏆 Hiring Champion Trophy — Winner's desk trophy for the month">
+</option></option></option></option></option></option></option></option></option></datalist>
+</body></html>
