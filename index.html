@@ -372,17 +372,27 @@ let sessionToken=sessionStorage.getItem(SESSION_KEY)||"";
 let saveTimer=null,saveInFlight=Promise.resolve();
 const diffPts={normal:0,difficult:1,very:2,critical:3},diffLabel={normal:"Normal",difficult:"Difficult",very:"Very Difficult",critical:"Critical"};
 const $=id=>document.getElementById(id);
-async function api(functionName,body,authenticated=false){
+async function api(functionName,body,authenticated=false,tokenOverride=""){
  const headers={"content-type":"application/json","apikey":SUPABASE_PUBLISHABLE_KEY};
- if(authenticated&&sessionToken)headers.authorization=`Bearer ${sessionToken}`;
+ const authToken=tokenOverride||sessionToken;
+ if(authenticated&&authToken)headers.authorization=`Bearer ${authToken}`;
  const response=await fetch(`${SUPABASE_URL}/functions/v1/${functionName}`,{method:"POST",headers,body:JSON.stringify(body||{})});
  const result=await response.json().catch(()=>({}));
  if(!response.ok||result.success===false)throw new Error(result.error||`Request failed (${response.status})`);
  return result;
 }
+function queueSharedSave(){
+ const token=sessionToken,state=JSON.parse(JSON.stringify(S));
+ saveInFlight=saveInFlight.catch(()=>{}).then(()=>api("game-api",{action:"sync",state},true,token));
+ return saveInFlight;
+}
 function save(){
  clearTimeout(saveTimer);
- saveTimer=setTimeout(()=>{saveInFlight=saveInFlight.then(()=>api("game-api",{action:"sync",state:S},true)).catch(e=>{console.error(e);alert("Your latest change could not be saved to the shared database. Please refresh and try again.")})},150);
+ saveTimer=setTimeout(()=>{saveTimer=null;queueSharedSave().catch(e=>{console.error(e);alert("Your latest change could not be saved to the shared database. Please refresh and try again.")})},150);
+}
+async function flushSharedSave(){
+ if(saveTimer){clearTimeout(saveTimer);saveTimer=null;queueSharedSave()}
+ await saveInFlight;
 }
 async function loadAccounts(){
  try{let r=await api("game-api",{action:"accounts"});S.users=r.users||[];populateLogin()}
@@ -433,7 +443,11 @@ async function loginNow(){
    showGame();
  }
 }
-function logout(){let overlay=document.getElementById("celebrate");if(overlay){overlay.classList.remove("show");overlay.style.display=""}current=null;sessionToken="";sessionStorage.removeItem(SESSION_KEY);app.classList.add("hidden");login.classList.remove("hidden");loginPin.value="";loadAccounts()}
+async function logout(){
+ try{await flushSharedSave()}catch(e){console.error(e);alert("Your latest changes could not be saved. You are still signed in so you can try again.");return}
+ let overlay=document.getElementById("celebrate");if(overlay){overlay.classList.remove("show");overlay.style.display=""}
+ current=null;sessionToken="";sessionStorage.removeItem(SESSION_KEY);app.classList.add("hidden");login.classList.remove("hidden");loginPin.value="";loadAccounts()
+}
 function render(){if(!current)return;topAvatar.innerHTML=avatar(current);topName.textContent=current.name;topRole.textContent=current.role==="admin"?"Admin":current.role==="leader"?"Team Leader":"Recruiter";enforceRoleControls();if(current.role==="admin")renderSystemAdminOnly();else if(current.role==="leader")renderAdmin();else renderGame()}
 function renderGame(){
  let target=current.role==="leader"?(S.users.find(u=>u.role==="recruiter")||current):current, I=info(target.id), own=S.positions.filter(p=>p.recruiterId===target.id), closedP=own.filter(p=>p.closed),ttfs=closedP.map(p=>p.ttf).filter(Number.isFinite);
