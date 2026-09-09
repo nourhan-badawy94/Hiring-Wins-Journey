@@ -422,8 +422,10 @@ async function loginNow(){
  try{
   let result=await api("pin-login",{name:u.name,pin:loginPin.value});
   sessionToken=result.session_token;sessionStorage.setItem(SESSION_KEY,sessionToken);
-  current={id:String(result.user.id),name:result.user.name,role:result.user.role==="team_leader"?"leader":result.user.role,teamId:result.user.team_id==null?null:String(result.user.team_id),photo:result.user.photo_url||"",quote:result.user.personal_quote||""};
-  await loadSharedState();current=S.users.find(x=>String(x.id)===String(current.id))||current;
+  const signedInRole=result.user.role==="team_leader"?"leader":result.user.role;
+  current={id:String(result.user.id),name:result.user.name,role:signedInRole,teamId:result.user.team_id==null?null:String(result.user.team_id),photo:result.user.photo_url||"",quote:result.user.personal_quote||""};
+  await loadSharedState();
+  current=S.users.find(x=>x.name===result.user.name&&x.role===signedInRole)||current;
  }catch(e){alert(e.message||"Incorrect PIN.");return}finally{loginBtn.disabled=false}
  login.classList.add("hidden");
  app.classList.remove("hidden");
