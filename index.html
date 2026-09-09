@@ -349,7 +349,10 @@ textarea{resize:vertical;min-height:110px;font-family:inherit}.clickableQuest{cu
   </div>
 </div>
 <script>
-const KEY="intercomHiringWinsFreshV31";
+// Supabase connection. Replace the publishable-key placeholder before publishing.
+const SUPABASE_URL="https://llnojsmyymkdjaattxpv.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_DppbUp6yP7HXHrJEu9d6ew_Ff4L-PzR";
+const SESSION_KEY="hiringWinsSession";
 const defaultLevels=[
 {name:"🌱 First Win",points:10,quote:"Great journeys start with one win.",reward:"🍫 Chocolate Fix — Chocolate",hidden:true},
 {name:"✨ Momentum Maker",points:25,quote:"Small wins build big momentum.",reward:"☕ Coffee on Me — Coffee",hidden:true},
@@ -362,13 +365,30 @@ const defaultLevels=[
 {name:"👑 Recruitment Royalty",points:270,quote:"Big wins deserve a real celebration.",reward:"🍫 Chocolate Fix — Chocolate",hidden:true},
 {name:"🏆 Hiring Champion",points:325,quote:"You didn't just play the game. You raised the game.",reward:"🏆 Hiring Champion Trophy — Winner's desk trophy for the month",hidden:true}
 ];
-let S;try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
-if(!S)S={users:[{id:"admin",role:"admin",name:"Admin",pin:"0000",photo:"",quote:"Game Administrator"}],levels:defaultLevels,positions:[],notifications:[],celebrations:[]};
+let S={users:[],levels:defaultLevels,positions:[],notifications:[],celebrations:[]};
 ["users","levels","positions","notifications","celebrations"].forEach(k=>S[k]||(S[k]=[]));
-if(!S.users.some(u=>u.role==="admin"))S.users.unshift({id:"admin",role:"admin",name:"Admin",pin:"0000",photo:"",quote:"Game Administrator"});
 let current=null;
+let sessionToken=sessionStorage.getItem(SESSION_KEY)||"";
+let saveTimer=null,saveInFlight=Promise.resolve();
 const diffPts={normal:0,difficult:1,very:2,critical:3},diffLabel={normal:"Normal",difficult:"Difficult",very:"Very Difficult",critical:"Critical"};
-const $=id=>document.getElementById(id), save=()=>localStorage.setItem(KEY,JSON.stringify(S));
+const $=id=>document.getElementById(id);
+async function api(functionName,body,authenticated=false){
+ const headers={"content-type":"application/json","apikey":SUPABASE_PUBLISHABLE_KEY};
+ if(authenticated&&sessionToken)headers.authorization=`Bearer ${sessionToken}`;
+ const response=await fetch(`${SUPABASE_URL}/functions/v1/${functionName}`,{method:"POST",headers,body:JSON.stringify(body||{})});
+ const result=await response.json().catch(()=>({}));
+ if(!response.ok||result.success===false)throw new Error(result.error||`Request failed (${response.status})`);
+ return result;
+}
+function save(){
+ clearTimeout(saveTimer);
+ saveTimer=setTimeout(()=>{saveInFlight=saveInFlight.then(()=>api("game-api",{action:"sync",state:S},true)).catch(e=>{console.error(e);alert("Your latest change could not be saved to the shared database. Please refresh and try again.")})},150);
+}
+async function loadAccounts(){
+ try{let r=await api("game-api",{action:"accounts"});S.users=r.users||[];populateLogin()}
+ catch(e){console.error(e);loginAccount.innerHTML='<option>Unable to load accounts</option>';loginBtn.disabled=true;alert("Hiring Wins could not connect to Supabase. Check the publishable key and deployed functions.")}
+}
+async function loadSharedState(){let r=await api("game-api",{action:"load"},true);S=r.state;["users","levels","positions","notifications","celebrations"].forEach(k=>S[k]||(S[k]=[]));}
 function esc(v=""){return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
 function avatar(u,cls="avatar"){return u.photo?`<img class="${cls}" src="${u.photo}" alt="${esc(u.name)}">`:`<div class="${cls} initials">${esc(u.name.split(/\s+/).map(x=>x[0]).join("").slice(0,2).toUpperCase())}</div>`}
 function dt(x){if(!x)return null;let [y,m,d]=x.split("-").map(Number);return Date.UTC(y,m-1,d)}function days(a,b){return Math.round((dt(b)-dt(a))/86400000)}
@@ -385,10 +405,16 @@ function info(id){
 }
 function notify(uid,title,text){S.notifications.unshift({id:Date.now()+Math.random(),uid,title,text,read:false,at:new Date().toLocaleString()})}
 function populateLogin(){loginAccount.innerHTML=S.users.map(u=>`<option value="${u.id}">${esc(u.name)} — ${u.role==="admin"?"Admin":u.role==="leader"?"Team Leader":"Recruiter"}</option>`).join("")}
-function loginNow(){
+async function loginNow(){
  let u=S.users.find(x=>x.id===loginAccount.value);
- if(!u||u.pin!==loginPin.value){alert("Incorrect PIN.");return}
- current=u;
+ if(!u){alert("Choose an account.");return}
+ loginBtn.disabled=true;
+ try{
+  let result=await api("pin-login",{name:u.name,pin:loginPin.value});
+  sessionToken=result.session_token;sessionStorage.setItem(SESSION_KEY,sessionToken);
+  current={id:String(result.user.id),name:result.user.name,role:result.user.role==="team_leader"?"leader":result.user.role,teamId:result.user.team_id==null?null:String(result.user.team_id),photo:result.user.photo_url||"",quote:result.user.personal_quote||""};
+  await loadSharedState();current=S.users.find(x=>String(x.id)===String(current.id))||current;
+ }catch(e){alert(e.message||"Incorrect PIN.");return}finally{loginBtn.disabled=false}
  login.classList.add("hidden");
  app.classList.remove("hidden");
  adminNav.classList.toggle("hidden",u.role==="admin"||u.role==="recruiter");
@@ -407,7 +433,7 @@ function loginNow(){
    showGame();
  }
 }
-function logout(){let overlay=document.getElementById("celebrate");if(overlay){overlay.classList.remove("show");overlay.style.display=""}current=null;app.classList.add("hidden");login.classList.remove("hidden");loginPin.value=""}
+function logout(){let overlay=document.getElementById("celebrate");if(overlay){overlay.classList.remove("show");overlay.style.display=""}current=null;sessionToken="";sessionStorage.removeItem(SESSION_KEY);app.classList.add("hidden");login.classList.remove("hidden");loginPin.value="";loadAccounts()}
 function render(){if(!current)return;topAvatar.innerHTML=avatar(current);topName.textContent=current.name;topRole.textContent=current.role==="admin"?"Admin":current.role==="leader"?"Team Leader":"Recruiter";enforceRoleControls();if(current.role==="admin")renderSystemAdminOnly();else if(current.role==="leader")renderAdmin();else renderGame()}
 function renderGame(){
  let target=current.role==="leader"?(S.users.find(u=>u.role==="recruiter")||current):current, I=info(target.id), own=S.positions.filter(p=>p.recruiterId===target.id), closedP=own.filter(p=>p.closed),ttfs=closedP.map(p=>p.ttf).filter(Number.isFinite);
@@ -690,8 +716,8 @@ function showAdmin(){
  adminNav.classList.add("active");gameNav.classList.remove("active");renderAdmin();
 }
 function modal(id,on=true){document.getElementById(id).classList.toggle("show",on)}
-function openRecruiter(id=""){let u=S.users.find(x=>x.id===id);rId.value=id;rName.value=u?.name||"";rPin.value=u?.pin||"";rQuote.value=u?.quote||"";rPhoto.value="";modal("recruiterModal")}
-async function saveRec(){let name=rName.value.trim(),pin=rPin.value.trim();if(!name||pin.length<4){alert("Enter a name and PIN of at least 4 characters.");return}let photo="",file=rPhoto.files[0];if(file){if(file.size>2_000_000){alert("Please use a photo under 2 MB.");return}photo=await new Promise(res=>{let fr=new FileReader();fr.onload=()=>res(fr.result);fr.readAsDataURL(file)})}let u=S.users.find(x=>x.id===rId.value);if(u){u.name=name;u.pin=pin;u.quote=rQuote.value.trim();if(photo)u.photo=photo}else{
+function openRecruiter(id=""){let u=S.users.find(x=>x.id===id);rId.value=id;rName.value=u?.name||"";rPin.value="";rPin.placeholder=u?"Leave blank to keep the current PIN":"Minimum 4 characters";rQuote.value=u?.quote||"";rPhoto.value="";modal("recruiterModal")}
+async function saveRec(){let name=rName.value.trim(),pin=rPin.value.trim(),u=S.users.find(x=>x.id===rId.value);if(!name||(!u&&pin.length<4)||(pin&&pin.length<4)){alert("Enter a name and a PIN of at least 4 characters (or leave PIN blank when editing).");return}let photo="",file=rPhoto.files[0];if(file){if(file.size>2_000_000){alert("Please use a photo under 2 MB.");return}photo=await new Promise(res=>{let fr=new FileReader();fr.onload=()=>res(fr.result);fr.readAsDataURL(file)})}if(u){u.name=name;if(pin)u.pin=pin;u.quote=rQuote.value.trim();if(photo)u.photo=photo}else{
   u={id:"r"+Date.now(),role:"recruiter",teamId:current?.role==="leader"?current.teamId:null,name,pin,photo,quote:rQuote.value.trim()};
   S.users.push(u);
   notify(u.id,"👋 Welcome",`Welcome ${name}! Your Hiring Wins Journey is ready.`)
@@ -800,7 +826,7 @@ function closeCelebration(){
 }
 function confetti(){let cs=["#0569c8","#ffb70f","#f5222d","#fff"];for(let i=0;i<75;i++){let e=document.createElement("div");e.className="conf";e.style.left=Math.random()*100+"vw";e.style.background=cs[Math.floor(Math.random()*cs.length)];e.style.animationDelay=Math.random()*.8+"s";document.body.appendChild(e);setTimeout(()=>e.remove(),3400)}}
 loginBtn.onclick=loginNow;logoutNav.onclick=logout;notifPrev.onclick=()=>{if(notifPage>0){notifPage--;renderGame()}};notifNext.onclick=()=>{let target=current.role==="leader"?S.users.find(u=>u.role==="recruiter"):current;if(!target)return;let total=Math.ceil(S.notifications.filter(n=>n.uid===target.id).length/5);if(notifPage<total-1){notifPage++;renderGame()}};gameNav.onclick=showGame;adminNav.onclick=showAdmin;newRecruiter.onclick=()=>openRecruiter();saveRecruiter.onclick=saveRec;newPosition.onclick=openPosition;newClosedPosition.onclick=openHistoricalClosed;saveHistoricalClosed.onclick=saveHistorical;addPosGame.onclick=openPosition;savePosition.onclick=savePos;doClose.onclick=closePos;newLevel.onclick=()=>openLevel();saveLevel.onclick=saveLev;claim.onclick=claimReward;document.querySelectorAll(".closeModal").forEach(b=>b.onclick=()=>b.closest(".modal").classList.remove("show"));
-populateLogin();save();
+ loadAccounts();
 document.getElementById("celebrateClose")?.addEventListener("click",closeCelebration);
 if(document.getElementById("newTeamLeader"))newTeamLeader.onclick=createTeamLeader;
 if(document.getElementById("saveTeamLeader"))saveTeamLeader.onclick=saveTL;
