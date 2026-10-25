@@ -166,6 +166,7 @@ textarea{resize:vertical;min-height:110px;font-family:inherit}.clickableQuest{cu
 }
 
 .btn.danger{background:#fff1f2;color:#b4232c;border:1px solid #ffd1d5}.btn.danger:hover{background:#ffe5e8;border-color:#ffb8bf}
+.actionMenu{position:relative;display:inline-block}.actionMenu>summary{list-style:none;min-width:112px;text-align:center}.actionMenu>summary::-webkit-details-marker{display:none}.actionMenu[open]>summary{background:#dfeefa}.actionMenuList{position:absolute;right:0;z-index:30;margin-top:6px;width:220px;padding:7px;background:#fff;border:1px solid #dfe8f2;border-radius:14px;box-shadow:0 14px 36px rgba(20,63,110,.18);display:grid;gap:5px}.actionMenuList .btn{width:100%;text-align:left;padding:10px 12px;border-radius:10px}.cancelEffort{background:#eef8ff;color:#075f9b}.cancelNoEffort{background:#f4f5f7;color:#4f5f70}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
@@ -207,6 +208,10 @@ textarea{resize:vertical;min-height:110px;font-family:inherit}.clickableQuest{cu
 <div class="card">
 <div class="head"><h3>📂 Open Positions</h3><button class="btn primary hidden" id="addPosGame">＋</button></div>
 <div style="font-size:11px;color:#6680a4">Positions currently assigned to you</div><div id="quests"></div>
+</div>
+<div class="card">
+<div class="head"><h3>🚫 Cancelled Positions</h3><span style="font-size:11px;color:#6680a4">Positions no longer active</span></div>
+<div id="cancelledPositions"></div>
 </div>
 <div class="card">
 <div class="head"><h3>⚡ How I Earn Points</h3><span class="pill normal">BONUS SCHEME</span></div>
@@ -278,6 +283,7 @@ textarea{resize:vertical;min-height:110px;font-family:inherit}.clickableQuest{cu
 <button class="btn soft" id="uploadPositionsBtn">⬆ Upload Excel</button>
 <input id="positionsExcelFile" type="file" accept=".xlsx,.xls,.csv" style="display:none">
 </div></div><div id="adminPositions"></div></div>
+<div class="card"><div class="head"><div><h3>🚫 Cancelled Positions</h3><small>Cancelled positions remain available for reference and management.</small></div></div><div id="adminCancelledPositions"></div></div>
 <div class="card"><div class="head"><h3>🏅 Milestones &amp; Rewards</h3><button class="btn primary" id="newLevel" class="adminOnlyControl">＋ Add Level</button></div><div id="adminLevels"></div></div>
 </div>
 </div>
@@ -402,7 +408,7 @@ async function loadSharedState(){let r=await api("game-api",{action:"load"},true
 function esc(v=""){return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
 function avatar(u,cls="avatar"){return u.photo?`<img class="${cls}" src="${u.photo}" alt="${esc(u.name)}">`:`<div class="${cls} initials">${esc(u.name.split(/\s+/).map(x=>x[0]).join("").slice(0,2).toUpperCase())}</div>`}
 function dt(x){if(!x)return null;let [y,m,d]=x.split("-").map(Number);return Date.UTC(y,m-1,d)}function days(a,b){return Math.round((dt(b)-dt(a))/86400000)}
-function pts(p){if(p.legacy)return 0;return p.closed?3+diffPts[p.difficulty]+(p.early?2:0)+(p.improved?2:0)+(p.major?1:0):0}
+function pts(p){if(p.legacy)return 0;if(p.cancelled)return p.cancelledWithEffort?2:0;return p.closed?3+diffPts[p.difficulty]+(p.early?2:0)+(p.improved?2:0)+(p.major?1:0):0}
 function userPts(id){return S.positions.filter(p=>p.recruiterId===id).reduce((n,p)=>n+pts(p),0)}
 function info(id){
  let P=userPts(id),ls=[...S.levels].sort((a,b)=>a.points-b.points),idx=-1,cumulative=0;
@@ -463,7 +469,8 @@ document.getElementById("positionsClosedCount").textContent=closedP.length;docum
  let cur=I.current||{name:"Getting Started",quote:"Every great hiring story starts with the first win."};levelName.textContent=cur.name;levelQuote.textContent=`“${cur.quote}”`;levelEmoji.textContent=(cur.name.match(/^[^\w\s]+/)||["🌱"])[0];
  if(I.next){let earned=I.stageEarned,required=I.stageRequired,pct=required?Math.max(0,Math.min(100,Math.round(earned/required*100))):0;xpBar.style.width=pct+"%";xpText.textContent=`${earned} / ${required} points`;milestoneCompletion.textContent=`${pct}% Milestone Completion`;toNext.textContent=`${Math.max(0,required-earned)} points to next level`}else{xpBar.style.width="100%";xpText.textContent=`${I.P} lifetime points`;milestoneCompletion.textContent="100% Milestone Completion";toNext.textContent="🔒 ??? — Next Mystery Milestone ♾️"}
  let start=Math.max(0,I.idx-2);path.innerHTML=I.ls.slice(start,start+7).map((l,k)=>{let actual=start+k,st=actual<I.idx?"done":actual===I.idx?"current":"";return`<div class="node ${st}"><div class="bubble">${actual<=I.idx?"🏅":"☆"}</div><small>${esc(l.name.replace(/^[^\w]+/,""))}</small></div>`}).join("")+((start+7>=I.ls.length)?'<div class="node"><div class="bubble">∞</div><small>Beyond...</small></div>':"");
- let opens=own.filter(p=>!p.closed);quests.innerHTML=opens.length?opens.map(p=>`<div class="quest clickableQuest" onclick="showPositionDetails('${p.id}')"><b>${esc(p.name)}</b><span class="pill ${p.status==="hold"?"hold":p.difficulty==="critical"?"critical":p.difficulty==="normal"?"normal":"difficult"}" style="float:right">${p.status==="hold"?"⏸ ON HOLD":diffLabel[p.difficulty]}</span><div class="meta"><span>👤 ${esc(p.manager||"Manager not added")}</span><span>📅 Opened: ${p.open}</span><span>🎯 Target: ${p.target}</span></div><small class="viewHint">Click to view position details →</small>${current.role==="leader"?`<button class="btn yellow closeQuest" data-id="${p.id}" onclick="event.stopPropagation()" style="margin-top:8px;padding:7px 10px">Close Position</button>`:""}</div>`).join(""):'<div style="padding:20px;text-align:center;color:#6680a4">No open positions right now.</div>';
+ let opens=own.filter(p=>!p.closed&&!p.cancelled);quests.innerHTML=opens.length?opens.map(p=>`<div class="quest clickableQuest" onclick="showPositionDetails('${p.id}')"><b>${esc(p.name)}</b><span class="pill ${p.status==="hold"?"hold":p.difficulty==="critical"?"critical":p.difficulty==="normal"?"normal":"difficult"}" style="float:right">${p.status==="hold"?"⏸ ON HOLD":diffLabel[p.difficulty]}</span><div class="meta"><span>👤 ${esc(p.manager||"Manager not added")}</span><span>📅 Opened: ${p.open}</span><span>🎯 Target: ${p.target}</span></div><small class="viewHint">Click to view position details →</small>${current.role==="leader"?`<button class="btn yellow closeQuest" data-id="${p.id}" onclick="event.stopPropagation()" style="margin-top:8px;padding:7px 10px">Close Position</button>`:""}</div>`).join(""):'<div style="padding:20px;text-align:center;color:#6680a4">No open positions right now.</div>';
+ let cancelled=own.filter(p=>p.cancelled);cancelledPositions.innerHTML=cancelled.length?cancelled.map(p=>`<div class="quest"><b>${esc(p.name)}</b><span class="pill hold" style="float:right">🚫 CANCELLED</span><div class="meta"><span>👤 ${esc(p.manager||"Manager not added")}</span><span>📅 Opened: ${p.open}</span><span>🎯 Target was: ${p.target||"—"}</span></div></div>`).join(""):'<div style="padding:20px;text-align:center;color:#6680a4">No cancelled positions.</div>';
  let winsP=[...closedP].sort((a,b)=>(b.offer||"").localeCompare(a.offer||""));wins.innerHTML=winsP.length?winsP.map(p=>`<div class="quest clickableQuest" onclick="showWinDetails('${p.id}')"><b>🏆 ${esc(p.name)}</b>${p.legacy?`<span class="preGameTag">🏁 PRE-GAME WIN</span><span style="float:right;font-weight:900;color:#6680a4">History only</span>`:`<span style="float:right;font-weight:900;color:#0068c9">+${pts(p)} pts</span>`}<div class="meta"><span>${esc(p.candidate)}</span><span>TTF: ${p.ttf} days</span></div><small class="viewHint">Click to view hiring win details →</small></div>`).join(""):'<div style="padding:20px;text-align:center;color:#6680a4">Your hiring wins will appear here 🎯</div>';
  let allNs=S.notifications.filter(n=>n.uid===target.id);notifBadge.textContent=allNs.filter(n=>!n.read).length;
  const perPage=5,totalPages=Math.max(1,Math.ceil(allNs.length/perPage));if(notifPage>=totalPages)notifPage=totalPages-1;if(notifPage<0)notifPage=0;
@@ -577,13 +584,15 @@ function renderAdmin(){
  let recs=visibleRecruiters();
  recruiterList.innerHTML=recs.length?recs.map(u=>`<div class="recruiter">${avatar(u)}<div style="flex:1;min-width:0"><b>${esc(u.name)}</b><small style="display:block;color:#6680a4">${userPts(u.id)} pts • ${S.positions.filter(p=>p.recruiterId===u.id&&p.closed).length} wins</small></div><button class="btn soft editRec" data-id="${u.id}">Edit</button><button class="btn danger deleteRec" data-id="${u.id}">Delete</button></div>`).join(""):'<div style="padding:20px;text-align:center;color:#6680a4">Create recruiter accounts here. Each recruiter will only see their own Hiring Game.</div>';
  let recIds=new Set(recs.map(r=>r.id));
- let teamPositions=S.positions.filter(p=>recIds.has(p.recruiterId));
- adminPositions.innerHTML=teamPositions.length?`<table class="table"><thead><tr><th>Position</th><th>Recruiter</th><th>Status</th><th>Points</th><th></th></tr></thead><tbody>${teamPositions.map(p=>{let u=S.users.find(x=>x.id===p.recruiterId);return`<tr><td><b>${esc(p.name)}</b><br><small>${diffLabel[p.difficulty]||esc(p.difficulty||"Normal")}</small></td><td>${esc(u?.name||"—")}</td><td>${p.closed?(p.legacy?"🏁 Pre-Game":"✅ Closed"):(p.status==="hold"?"⏸ On Hold":"🎯 Open")}</td><td>${p.closed?pts(p):"—"}</td><td><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn soft editPos" data-id="${p.id}">✏️ Edit Details</button>${p.closed?`<button class="btn yellow editClosure" data-id="${p.id}">✏️ Edit Closure</button>`:`<button class="btn yellow closeQuest" data-id="${p.id}">Close</button>`}<button class="btn soft reassignPos" data-id="${p.id}">↔ Reassign</button><button class="btn danger deletePos" data-id="${p.id}">Delete</button></div></td></tr>`}).join("")}</tbody></table>`:'<div style="padding:20px;text-align:center;color:#6680a4">No positions yet.</div>';
+  let teamPositions=S.positions.filter(p=>recIds.has(p.recruiterId)),activeTeamPositions=teamPositions.filter(p=>!p.cancelled),cancelledTeamPositions=teamPositions.filter(p=>p.cancelled);
+  adminPositions.innerHTML=activeTeamPositions.length?`<table class="table"><thead><tr><th>Position</th><th>Recruiter</th><th>Status</th><th>Points</th><th></th></tr></thead><tbody>${activeTeamPositions.map(p=>{let u=S.users.find(x=>x.id===p.recruiterId),status=p.closed?(p.legacy?"🏁 Pre-Game":"✅ Closed"):(p.status==="hold"?"⏸ On Hold":"🎯 Open");return`<tr><td><b>${esc(p.name)}</b><br><small>${diffLabel[p.difficulty]||esc(p.difficulty||"Normal")}</small></td><td>${esc(u?.name||"—")}</td><td>${status}</td><td>${p.closed?pts(p):"—"}</td><td><details class="actionMenu"><summary class="btn soft">Actions ▾</summary><div class="actionMenuList"><button class="btn soft editPos" data-id="${p.id}">✏️ Edit Details</button>${p.closed?`<button class="btn yellow editClosure" data-id="${p.id}">✏️ Edit Closure</button>`:`<button class="btn yellow closeQuest" data-id="${p.id}">🏆 Close Position</button><button class="btn cancelEffort cancelPos" data-id="${p.id}" data-effort="true">➕ Cancelled with Effort</button><button class="btn cancelNoEffort cancelPos" data-id="${p.id}" data-effort="false">🚫 Cancelled without Effort</button>`}<button class="btn soft reassignPos" data-id="${p.id}">↔ Reassign</button><button class="btn danger deletePos" data-id="${p.id}">🗑 Delete</button></div></details></td></tr>`}).join("")}</tbody></table>`:'<div style="padding:20px;text-align:center;color:#6680a4">No active or closed positions yet.</div>';
+  adminCancelledPositions.innerHTML=cancelledTeamPositions.length?`<table class="table"><thead><tr><th>Position</th><th>Recruiter</th><th>Status</th><th></th></tr></thead><tbody>${cancelledTeamPositions.map(p=>{let u=S.users.find(x=>x.id===p.recruiterId);return`<tr><td><b>${esc(p.name)}</b><br><small>${diffLabel[p.difficulty]||esc(p.difficulty||"Normal")}</small></td><td>${esc(u?.name||"—")}</td><td>🚫 Cancelled</td><td><details class="actionMenu"><summary class="btn soft">Actions ▾</summary><div class="actionMenuList"><button class="btn soft editPos" data-id="${p.id}">✏️ Edit Details</button><button class="btn soft reassignPos" data-id="${p.id}">↔ Reassign</button><button class="btn danger deletePos" data-id="${p.id}">🗑 Delete</button></div></details></td></tr>`}).join("")}</tbody></table>`:'<div style="padding:20px;text-align:center;color:#6680a4">No cancelled positions.</div>';
  adminLevels.innerHTML=`<table class="table"><thead><tr><th>Level</th><th>Points</th><th>Reward</th><th></th></tr></thead><tbody>${[...S.levels].sort((a,b)=>a.points-b.points).map((l,i)=>`<tr><td><b>${esc(l.name)}</b><br><small>“${esc(l.quote)}”</small></td><td>${l.points}</td><td>${l.hidden?"🔒 ":""}${esc(l.reward||"—")}</td><td><button class="btn soft editLevel" data-p="${l.points}">Edit</button></td></tr>`).join("")}</tbody></table>`;
   document.querySelectorAll(".editRec").forEach(b=>b.onclick=()=>openRecruiter(b.dataset.id));
   document.querySelectorAll(".deleteRec").forEach(b=>b.onclick=()=>deleteRecruiter(b.dataset.id));
   document.querySelectorAll(".editPos").forEach(b=>b.onclick=()=>openPosition(b.dataset.id));
   document.querySelectorAll(".editClosure").forEach(b=>b.onclick=()=>openClose(b.dataset.id,true));
+  document.querySelectorAll(".cancelPos").forEach(b=>b.onclick=()=>cancelPosition(b.dataset.id,b.dataset.effort==="true"));
  document.querySelectorAll(".closeQuest").forEach(b=>b.onclick=()=>openClose(b.dataset.id));
  document.querySelectorAll(".reassignPos").forEach(b=>b.onclick=()=>openPositionReassign(b.dataset.id));
  document.querySelectorAll(".deletePos").forEach(b=>b.onclick=()=>deletePosition(b.dataset.id));
@@ -623,6 +632,14 @@ function savePositionReassign(){
  let p=S.positions.find(x=>x.id===id);if(!p)return;
  if(!confirm(`Delete position "${p.name}" permanently?`))return;
  S.positions=S.positions.filter(x=>x.id!==id);save();render();
+}
+function cancelPosition(id,withEffort){
+ let p=S.positions.find(x=>String(x.id)===String(id));if(!p||p.closed||p.cancelled)return;
+ let label=withEffort?"Cancelled with Effort (+2 points)":"Cancelled without Effort (0 points)";
+ if(!confirm(`Mark "${p.name}" as ${label}?\n\nIt will be removed from the recruiter's open positions.`))return;
+ p.cancelled=true;p.cancelledWithEffort=!!withEffort;p.cancelledAt=new Date().toISOString();p.status="cancelled";
+ notify(p.recruiterId,"🚫 Position Cancelled",`${p.name} was cancelled and moved to Cancelled Positions.`);
+ save();render();
 }
 function deleteTeamLeader(id){
  if(current?.role!=="admin")return;
